@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="Zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心尘的引导</title>
+    <style>
+        * {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #d3dafa;
+        }
+        .shell{
+            position:fixed;
+            
+            width: 280px;
+            height: 650px;
+            background-color: #8a98c9;
+        }
+        .buttons{
+            margin: 60px 0;
+            color: #fff;
+        }
+        .li{
+            letter-spacing: 2px;
+            font: 600 17px '';
+            padding: 16px 52px;
+            transition: .3s;
+        }
+        .li::after{
+            content: '';
+            position: absolute;
+            left: 20px;
+            margin-top: -22px;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 50%;
+        }
+        .buttons>li:hover{
+            background-color: #beb5df;
+        }
+        
+        .li ul{
+            width: 0;
+            height: 530px;
+            padding: 60px 0;
+            position: absolute;
+            top: 0;
+            right: 0;
+            overflow: hidden;
+            background-color: #59699b;
+            transition: .3s;
+        }
+
+        .li ul li{
+            padding: 16px 24px;
+            transition: .3s;
+        }
+
+        .li:hover ul{
+            width: 228px;
+        }
+        .li ul li:hover{
+            background-color: #828eb9;
+        }
+        
+        a{
+            text-decoration: none;
+            user-select: none;
+            color: #ffffff;
+        }
+        li{
+            user-select: none;
+        }
+        a:hover{
+            color: #c6c6c6;
+        }
+    </style>
+</head>
+<body>
+    <nav class="shell">
+        <ul class="buttons">
+            <li class="li">
+                <a href="https://blog.wulvxinchen.cn/">Blog</a>
+            </li>
+            
+            <li class="li">
+                子站列表
+                <ul>
+                    <li>
+                         <a href="https://my.wulvxinchen.cn/tools">工具站</a>
+                    </li>
+                    <li>
+                        <a href="https://my.wulvxinchen.cn/download">下载站</a>
+                    </li>
+                    <li>
+                         <a href="https://my.wulvxinchen.cn/pictures">图片站</a>
+                    </li>
+                </ul>
+            </li>
+            
+            <li class="li">
+                各种杂七杂八
+                <ul>
+                    <li>
+                        <a href="https://my.wulvxinchen.cn/hutaolive">胡桃Live2D</a>
+                    </li>
+                    <li>
+                        <a href="https://my.wulvxinchen.cn/helpbaidu">让我帮你百度一下</a>
+                    </li>
+                    <li>
+                        <a href="#">播放器(未实装)</a>
+                    </li>
+                    
+                </ul>
+                    
+            </li>
+            
+            <li class="li">
+                主页
+                <ul>
+                    <li>
+                        <a href="https://space.bilibili.com/19239632">B站</a>
+                    </li>
+                    <li>
+                        <a href="https://www.acfun.cn/u/3240613">A站</a>
+                    </li>
+                    <li>
+                        <a href="https://music.163.com/#/user/home?id=269077414">网易云音乐</a>
+                    </li>
+                    <li>
+                        <a href="https://www.zhihu.com/people/dr-passerby">知乎</a>
+                    </li>
+                    <li>
+                        <a href="https://weibo.com/u/5688538477">微博</a>
+                    </li>
+                    <li>
+                        <a href="https://jq.qq.com/?_wv=1027&k=yP92ZR1a">玩耍群聊</a>
+                    </li>
+                </ul>
+                    
+            </li>
+        </ul>
+    </nav>
+</body>
+</html>
