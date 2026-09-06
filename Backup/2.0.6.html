@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="心尘的引导 - 轻简导航">
+    <title>心尘的引导</title>
+    <link rel="icon" href="https://my.wulvxinchen.cn/pictures/logo/weblogo.ico">
+    <script async src="https://wulvxinchen.cn/access/access.js"></script>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg-top: #eceef7;
+            --bg-bottom: #e3e6f2;
+            --card: #fdfdff;
+            --ink: #33364a;
+            --ink-2: #767b92;
+            --line: #dde0ec;
+            --accent: #5f6290;
+            --accent-deep: #4a4d74;
+            --accent-2: #8f92b8;
+            --accent-soft: #edeff8;
+            --terra: #c49a80;
+            --glow: rgba(95, 98, 144, .11);
+            --dot-a: rgba(95, 98, 144, .14);
+            --dot-b: rgba(196, 154, 128, .12);
+            --shadow: 0 1px 2px rgba(51, 54, 74, .05), 0 12px 28px -18px rgba(51, 54, 74, .20);
+            --hover-shadow: 0 16px 34px -18px rgba(51, 54, 74, .30);
+            --toggle-bg: rgba(255, 255, 255, .72);
+            --foot: #a09caa;
+            --foot-link: #8f8b9c;
+        }
+
+        [data-theme="dark"] {
+            color-scheme: dark;
+            --bg-top: #1a1c29;
+            --bg-bottom: #12131d;
+            --card: #23253a;
+            --ink: #e8e9f4;
+            --ink-2: #9a9db8;
+            --line: #333650;
+            --accent: #9aa0d8;
+            --accent-deep: #7b80c0;
+            --accent-2: #b3b6e0;
+            --accent-soft: #2b2e45;
+            --terra: #d3a488;
+            --glow: rgba(120, 126, 200, .16);
+            --dot-a: rgba(180, 185, 220, .12);
+            --dot-b: rgba(211, 164, 136, .09);
+            --shadow: 0 1px 2px rgba(0, 0, 0, .30), 0 14px 30px -18px rgba(0, 0, 0, .55);
+            --hover-shadow: 0 18px 38px -20px rgba(0, 0, 0, .60);
+            --toggle-bg: rgba(35, 37, 58, .65);
+            --foot: #6f738f;
+            --foot-link: #8b8fb0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100dvh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+                "Microsoft YaHei", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--ink);
+            /* 双色点阵，致敬原版 index.html 的圆点纹理；亮度参照原版柔和浅紫 */
+            background:
+                radial-gradient(1000px 520px at 50% -12%, var(--glow), transparent 62%),
+                radial-gradient(var(--dot-a) 1.2px, transparent 1.3px),
+                radial-gradient(var(--dot-b) 1.2px, transparent 1.3px),
+                linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+            background-size: auto, 24px 24px, 24px 24px, auto;
+            background-position: 0 0, 0 0, 12px 12px, 0 0;
+            -webkit-font-smoothing: antialiased;
+            transition: color .3s ease;
+        }
+
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* ---------- 主题切换（右上角，低调） ---------- */
+        .theme-toggle {
+            position: fixed;
+            top: 14px;
+            right: 14px;
+            z-index: 20;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid var(--line);
+            background: var(--toggle-bg);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            font-size: 15px;
+            line-height: 1;
+            cursor: pointer;
+            opacity: .55;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity .2s, transform .2s, background-color .3s, border-color .3s;
+        }
+
+        .theme-toggle:hover {
+            opacity: 1;
+            transform: rotate(12deg);
+        }
+
+        /* ---------- 舞台（首屏） ---------- */
+        .stage {
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 56px 20px 96px;
+            text-align: center;
+        }
+
+        .title {
+            margin: 0;
+            font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;
+            font-size: clamp(30px, 5.5vw, 42px);
+            font-weight: 600;
+            letter-spacing: .14em;
+            animation: rise .5s ease both;
+        }
+
+        .greet {
+            margin: 14px 0 0;
+            font-size: 13px;
+            color: var(--ink-2);
+            letter-spacing: .05em;
+            animation: rise .5s .08s ease both;
+        }
+
+        /* ---------- 落语按钮 ---------- */
+        .entry {
+            margin-top: 40px;
+            padding: 13px 48px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: var(--toggle-bg);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            color: var(--ink);
+            font-size: 15px;
+            letter-spacing: .3em;
+            text-indent: .3em;
+            cursor: pointer;
+            transition: background-color .25s, color .25s, border-color .25s, box-shadow .25s;
+            animation: rise .5s .16s ease both;
+        }
+
+        .entry:hover {
+            background: var(--card);
+            border-color: var(--accent-2);
+            color: var(--accent);
+        }
+
+        .entry.active {
+            background: linear-gradient(135deg, var(--accent-deep), var(--accent-2));
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 10px 22px -10px rgba(70, 73, 110, .55);
+        }
+
+        /* ---------- 全部网站 ---------- */
+        .browse {
+            width: min(880px, 100%);
+            margin-top: 40px;
+            text-align: left;
+            animation: rise .35s ease both;
+        }
+
+        .browse .group {
+            padding-top: 32px;
+        }
+
+        .browse .group:first-child {
+            padding-top: 0;
+        }
+
+        .group-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .group-head .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent-2);
+        }
+
+        .group-head h2 {
+            margin: 0;
+            font-size: 14px;
+            letter-spacing: .18em;
+            color: var(--ink);
+        }
+
+        .group-head .count {
+            font-size: 11px;
+            color: var(--ink-2);
+            background: var(--accent-soft);
+            border: 1px solid var(--line);
+            padding: 2px 10px;
+            border-radius: 999px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 15px;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: var(--shadow);
+            transition: transform .18s, box-shadow .18s, border-color .18s, background-color .3s;
+        }
+
+        .card .icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            background: var(--accent-soft);
+            border: 1px solid var(--line);
+        }
+
+        .card .body {
+            min-width: 0;
+        }
+
+        .card .t {
+            display: block;
+            font-size: 13.5px;
+            font-weight: 600;
+            letter-spacing: .03em;
+            color: var(--ink);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: color .25s;
+        }
+
+        .card .d {
+            display: block;
+            font-size: 11.5px;
+            color: var(--ink-2);
+            margin-top: 1px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (hover: hover) {
+            .card:hover {
+                transform: translateY(-2px);
+                border-color: var(--accent-2);
+                box-shadow: var(--hover-shadow);
+            }
+
+            .card:hover .t {
+                color: var(--accent);
+            }
+        }
+
+        /* ---------- 回收分类（不显眼，默认折叠） ---------- */
+        .recycle {
+            margin-top: 40px;
+            border-top: 1px dashed var(--line);
+        }
+
+        .recycle-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 26px 4px 0;
+            border: none;
+            background: none;
+            font: inherit;
+            color: var(--ink-2);
+            opacity: .75;
+            cursor: pointer;
+            text-align: left;
+            transition: opacity .2s, color .2s;
+        }
+
+        .recycle-head:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
+
+        .recycle-head h2 {
+            margin: 0;
+            font-size: 13px;
+            letter-spacing: .18em;
+        }
+
+        .recycle-head .count {
+            font-size: 11px;
+            color: var(--ink-2);
+            background: var(--accent-soft);
+            border: 1px solid var(--line);
+            padding: 2px 10px;
+            border-radius: 999px;
+        }
+
+        .recycle-head .arrow {
+            margin-left: auto;
+            font-size: 11px;
+            transition: transform .2s;
+        }
+
+        .recycle-head.open .arrow {
+            transform: rotate(90deg);
+        }
+
+        .recycle .grid {
+            margin-top: 14px;
+        }
+
+        /* ---------- 页脚 ---------- */
+        footer {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 14px;
+            text-align: center;
+            font-size: 11.5px;
+            color: var(--foot);
+            pointer-events: none;
+        }
+
+        footer a {
+            color: var(--foot-link);
+            text-decoration: none;
+            pointer-events: auto;
+        }
+
+        /* ---------- 响应式 ---------- */
+        @media (max-width: 720px) {
+            .stage {
+                padding: 44px 16px 96px;
+            }
+
+            .title {
+                letter-spacing: .1em;
+            }
+
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="切换深浅色模式">🌙</button>
+
+    <main class="stage">
+        <h1 class="title">心尘的引导</h1>
+        <p class="greet" id="greet">你好，欢迎回来</p>
+
+        <button type="button" class="entry" id="entry" aria-expanded="false">落语</button>
+
+        <div class="browse" id="browse" hidden></div>
+    </main>
+
+    <footer>
+        <span>@ 吾律心尘 · <a href="https://wulvxinchen.cn/" target="_blank" rel="noopener">wulvxinchen.cn</a></span>
+    </footer>
+
+    <noscript>
+        <ul>
+            <li><a href="https://my.wulvxinchen.cn/tools2">全新心尘工具集</a></li>
+            <li><a href="https://my.wulvxinchen.cn/tools">心尘工具集</a></li>
+            <li><a href="https://blog.wulvxinchen.cn/">博客站</a></li>
+            <li><a href="https://my.wulvxinchen.cn/pictures">图片站</a></li>
+            <li><a href="http://dl.wulvxinchen.cn:5244/open/图片/">新图片站</a></li>
+            <li><a href="http://dl.wulvxinchen.cn:5244/">下载站</a></li>
+            <li><a href="https://my.wulvxinchen.cn/quicksearchtext/">快速搜索文本</a></li>
+            <li><a href="https://my.wulvxinchen.cn/fastready/">随心而遇</a></li>
+            <li><a href="https://my.wulvxinchen.cn/genshincard">原神名片生成</a></li>
+            <li><a href="https://my.wulvxinchen.cn/wordbook/">原神词典</a></li>
+            <li><a href="https://my.wulvxinchen.cn/helpbaidu">让我帮你百度一下</a></li>
+            <li><a href="https://my.wulvxinchen.cn/homo">114514计算器</a></li>
+            <li><a href="https://my.wulvxinchen.cn/makewechat/">朋友圈转发生成</a></li>
+            <li><a href="https://my.wulvxinchen.cn/todolist">待办列表</a></li>
+            <li><a href="https://my.wulvxinchen.cn/myphi">在线Phi模拟器</a></li>
+            <li><a href="https://my.wulvxinchen.cn/hutaolive">胡桃Live2D</a></li>
+            <li><a href="https://my.wulvxinchen.cn/sunny/">晴天委托</a></li>
+            <li><a href="https://my.wulvxinchen.cn/search/">即刻搜索</a></li>
+            <li><a href="https://my.wulvxinchen.cn/githubtable.html">GitHub贡献表</a></li>
+            <li><a href="https://my.wulvxinchen.cn/fxxkyou/">祖安骂人</a></li>
+            <li><a href="https://my.wulvxinchen.cn/PSL/">PSL</a></li>
+            <li><a href="https://github.com/drpasserby">GitHub</a></li>
+            <li><a href="https://space.bilibili.com/19239632">BiliBili</a></li>
+            <li><a href="https://bangumi.tv/user/767656">Bangumi</a></li>
+            <li><a href="https://www.acfun.cn/u/3240613">AcFun</a></li>
+            <li><a href="https://music.163.com/#/user/home?id=269077414">网易云音乐</a></li>
+            <li><a href="https://www.youtube.com/@wulvxinchen">YouTube</a></li>
+        </ul>
+    </noscript>
+
+    <script>
+        // ---------- 数据 ----------
+        var GROUPS = [
+            { cat: 'quick', title: '常用直达' },
+            { cat: 'sub', title: '子站列表' },
+            { cat: 'tools', title: '杂七杂八 · 工具类' },
+            { cat: 'misc', title: '杂七杂八 · 杂项类' },
+            { cat: 'social', title: '个人链接' },
+            { cat: 'recycle', title: '回收' }
+        ];
+
+        var DATA = [
+            { cat: 'quick', icon: '✨', title: '全新心尘工具集', desc: '新版工具合集', url: 'https://my.wulvxinchen.cn/tools2' },
+
+            { cat: 'sub', icon: '🖼️', title: '图片站', desc: '图片资源站', url: 'https://my.wulvxinchen.cn/pictures' },
+            { cat: 'sub', icon: '📦', title: '下载站', desc: '文件下载站', url: 'http://dl.wulvxinchen.cn:5244/' },
+
+            { cat: 'tools', icon: '🔍', title: '快速搜索文本', desc: '批量搜索文本', url: 'https://my.wulvxinchen.cn/quicksearchtext/' },
+            { cat: 'tools', icon: '🍀', title: '随心而遇', desc: '随机偶遇', url: 'https://my.wulvxinchen.cn/fastready/' },
+            { cat: 'tools', icon: '🎴', title: '原神名片生成', desc: '原神名片生成', url: 'https://my.wulvxinchen.cn/genshincard' },
+            { cat: 'tools', icon: '📖', title: '原神词典', desc: '原神术语查询', url: 'https://my.wulvxinchen.cn/wordbook/' },
+            { cat: 'tools', icon: '🤔', title: '让我帮你百度一下', desc: '生成搜索链接', url: 'https://my.wulvxinchen.cn/helpbaidu' },
+            { cat: 'tools', icon: '🧮', title: '114514计算器', desc: '数字计算器', url: 'https://my.wulvxinchen.cn/homo' },
+            { cat: 'tools', icon: '📲', title: '朋友圈转发生成', desc: '转发图片生成', url: 'https://my.wulvxinchen.cn/makewechat/' },
+            { cat: 'tools', icon: '✅', title: '待办列表', desc: '在线待办事项', url: 'https://my.wulvxinchen.cn/todolist' },
+            { cat: 'tools', icon: '🎹', title: '在线Phi模拟器', desc: 'Phi 音游模拟', url: 'https://my.wulvxinchen.cn/myphi' },
+
+            { cat: 'misc', icon: '🍑', title: '胡桃Live2D', desc: '胡桃 Live2D', url: 'https://my.wulvxinchen.cn/hutaolive' },
+            { cat: 'misc', icon: '☀️', title: '晴天委托', desc: '晴天委托助手', url: 'https://my.wulvxinchen.cn/sunny/' },
+            { cat: 'misc', icon: '📊', title: 'GitHub贡献表', desc: '贡献热力图', url: 'https://my.wulvxinchen.cn/githubtable.html' },
+            { cat: 'misc', icon: '😤', title: '祖安骂人', desc: '祖安语录生成', url: 'https://my.wulvxinchen.cn/fxxkyou/' },
+            { cat: 'misc', icon: '📌', title: 'PSL', desc: 'PSL', url: 'https://my.wulvxinchen.cn/PSL/' },
+
+            { cat: 'social', icon: '🐙', title: 'GitHub', desc: '代码仓库', url: 'https://github.com/drpasserby' },
+            { cat: 'social', icon: '📺', title: 'BiliBili', desc: '哔哩哔哩主页', url: 'https://space.bilibili.com/19239632' },
+            { cat: 'social', icon: '🎬', title: 'Bangumi', desc: '番剧记录', url: 'https://bangumi.tv/user/767656' },
+            { cat: 'social', icon: '🎥', title: 'AcFun', desc: 'AcFun 主页', url: 'https://www.acfun.cn/u/3240613' },
+            { cat: 'social', icon: '🎵', title: '网易云音乐', desc: '音乐主页', url: 'https://music.163.com/#/user/home?id=269077414' },
+            { cat: 'social', icon: '▶️', title: 'YouTube', desc: '视频频道', url: 'https://www.youtube.com/@wulvxinchen' },
+
+            { cat: 'recycle', icon: '🧰', title: '心尘工具集', desc: '工具合集', url: 'https://my.wulvxinchen.cn/tools' },
+            { cat: 'recycle', icon: '🎨', title: '新图片站', desc: '新版图片站', url: 'http://dl.wulvxinchen.cn:5244/open/图片/' },
+            { cat: 'recycle', icon: '⚡', title: '即刻搜索', desc: '即时搜索', url: 'https://my.wulvxinchen.cn/search/' },
+            { cat: 'recycle', icon: '📝', title: '博客站', desc: '个人博客', url: 'https://blog.wulvxinchen.cn/' }
+        ];
+
+        // ---------- DOM ----------
+        var entryBtn = document.getElementById('entry');
+        var browse = document.getElementById('browse');
+
+        // ---------- 主题 ----------
+        var root = document.documentElement;
+        var toggleBtn = document.getElementById('themeToggle');
+
+        function applyTheme(theme) {
+            root.setAttribute('data-theme', theme);
+            toggleBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+            try { localStorage.setItem('xinchen-theme', theme); } catch (e) { /* 忽略 */ }
+        }
+
+        (function initTheme() {
+            var saved = null;
+            try { saved = localStorage.getItem('xinchen-theme'); } catch (e) { /* 忽略 */ }
+            var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            applyTheme(saved || (prefersDark ? 'dark' : 'light'));
+        })();
+
+        toggleBtn.addEventListener('click', function () {
+            applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        });
+
+        // ---------- 问候语 ----------
+        (function () {
+            var d = new Date();
+            var h = d.getHours();
+            var greet = h < 5 ? '夜深了，注意休息' :
+                h < 9 ? '早上好' :
+                h < 12 ? '上午好' :
+                h < 14 ? '中午好' :
+                h < 18 ? '下午好' :
+                h < 22 ? '晚上好' : '夜深了，注意休息';
+            document.getElementById('greet').textContent = greet + '，欢迎回来';
+        })();
+
+        // ---------- 渲染 ----------
+        function cardHTML(item) {
+            return '<a class="card" href="' + item.url + '" target="_blank" rel="noopener">' +
+                '<span class="icon" aria-hidden="true">' + item.icon + '</span>' +
+                '<span class="body"><span class="t">' + item.title + '</span>' +
+                '<span class="d">' + item.desc + '</span></span></a>';
+        }
+
+        function renderAll() {
+            var html = GROUPS.map(function (g) {
+                var items = DATA.filter(function (it) { return it.cat === g.cat; });
+                if (g.cat === 'recycle') {
+                    // 回收：只显示分类名，默认折叠，点击后才展开
+                    return '<section class="group recycle">' +
+                        '<button type="button" class="recycle-head" aria-expanded="false">' +
+                        '<span class="dot" aria-hidden="true"></span>' +
+                        '<h2>' + g.title + '</h2>' +
+                        '<span class="count">' + items.length + '</span>' +
+                        '<span class="arrow" aria-hidden="true">▸</span></button>' +
+                        '<div class="grid" hidden>' + items.map(cardHTML).join('') + '</div></section>';
+                }
+                return '<section class="group">' +
+                    '<div class="group-head"><span class="dot" aria-hidden="true"></span>' +
+                    '<h2>' + g.title + '</h2>' +
+                    '<span class="count">' + items.length + '</span></div>' +
+                    '<div class="grid">' + items.map(cardHTML).join('') + '</div></section>';
+            }).join('');
+            browse.innerHTML = html;
+            browse.hidden = false;
+            browse.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function collapse() {
+            browse.hidden = true;
+        }
+
+        // ---------- 落语：点击展开/收起全部网站 ----------
+        entryBtn.addEventListener('click', function () {
+            var isOpen = !browse.hidden;
+            if (isOpen) {
+                // 已展开 → 收起
+                collapse();
+                entryBtn.classList.remove('active');
+                entryBtn.setAttribute('aria-expanded', 'false');
+            } else {
+                // 收起状态 → 展开全部（回收分类仍保持折叠）
+                renderAll();
+                entryBtn.classList.add('active');
+                entryBtn.setAttribute('aria-expanded', 'true');
+            }
+        });
+
+        // 回收分类：点击表头单独展开/收起
+        browse.addEventListener('click', function (e) {
+            var head = e.target.closest('.recycle-head');
+            if (!head) return;
+            var grid = head.parentElement.querySelector('.grid');
+            var willOpen = grid.hidden;
+            grid.hidden = !willOpen;
+            head.classList.toggle('open', willOpen);
+            head.setAttribute('aria-expanded', String(willOpen));
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !browse.hidden) {
+                collapse();
+                entryBtn.classList.remove('active');
+                entryBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    </script>
+</body>
+
+</html>
