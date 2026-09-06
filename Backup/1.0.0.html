@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="Zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://my.wulvxinchen.cn/pictures/logo/weblogo.ico">
+    <script async src="https://wulvxinchen.cn/access/access.js"></script>
+    <title>心尘的引导</title>
+    <style>
+        * {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            height: 100vh;
+            cursor: url(./my/download/click/normal.cur), auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(2) rotate(75)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(229, 80%, 90%, 1)'/><path d='M40 45a5 5 0 110-10 5 5 0 010 10zM0 45a5 5 0 110-10 5 5 0 010 10zM0 5A5 5 0 110-5 5 5 0 010 5zm40 0a5 5 0 110-10 5 5 0 010 10z'  stroke-width='2' stroke='hsla(8, 100%, 84%, 1)' fill='none'/><path d='M20 25a5 5 0 110-10 5 5 0 010 10z'  stroke-width='2' stroke='hsla(198, 0%, 100%, 1)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(-32,-40)' fill='url(%23a)'/></svg>")
+        }
+        .shell{
+            position:fixed;
+            
+            width: 280px;
+            height: 650px;
+            background-color: #8a98c9;
+        }
+        .buttons{
+            margin: 60px 0;
+            color: #fff;
+        }
+        .li{
+            letter-spacing: 2px;
+            font: 600 17px '';
+            padding: 16px 52px;
+            transition: .3s;
+        }
+        .li::after{
+            content: '';
+            position: absolute;
+            left: 20px;
+            margin-top: -22px;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 50%;
+        }
+        .buttons>li:hover{
+            background-color: #beb5df;
+        }
+        
+        .li ul{
+            width: 0;
+            height: 530px;
+            padding: 60px 0;
+            position: absolute;
+            top: 0;
+            right: 0;
+            overflow: hidden;
+            background-color: #59699b;
+            transition: .3s;
+        }
+
+        .li ul li{
+            padding: 16px 24px;
+            transition: .3s;
+        }
+
+        .li:hover ul{
+            width: 228px;
+        }
+        .li ul li:hover{
+            background-color: #828eb9;
+        }
+        
+        a{
+            text-decoration: none;
+            user-select: none;
+            color: #ffffff;
+            cursor: url(./my/download/click/link.cur), auto;
+        }
+        li{
+            user-select: none;
+        }
+        a:hover{
+            color: #c6c6c6;
+        }
+    </style>
+</head>
+<body>
+    <nav class="shell">
+        <ul class="buttons">
+            <li class="li">
+                <a href="https://my.wulvxinchen.cn/tools2">全新心尘工具集</a>
+            </li>
+            <li class="li">
+                <a href="https://my.wulvxinchen.cn/tools">心尘工具集</a>
+            </li>
+            <li class="li">
+                子站列表
+                <ul>
+                    <li>
+                         <a href="https://blog.wulvxinchen.cn/">博客站</a>
+                    </li>
+                    <li>
+                         <a href="https://my.wulvxinchen.cn/pictures">图片站</a>
+                    </li>
+                    <li>
+                        <a href="http://dl.wulvxinchen.cn:5244/open/图片/">新图片站</a>
+                    </li>
+                    <li>
+                        <a href="http://dl.wulvxinchen.cn:5244/">下载站</a>
+                    </li>
+                </ul>
+            </li>
+            
+            <li class="li">
+                杂七杂八(工具类)
+                <ul>
+                    <li>
+                        <a href="https://my.wulvxinchen.cn/quicksearchtext/">快速搜索文本</a>
+                    </li>
+                    <li>
+                        <a href="https://my.wulvxinchen.cn/fastready/">随心而遇</a>
+                    </li>
+                    <li>
+                        <a href="https://my.wulvxinchen.cn/genshincard">原神名片生成</a>
+                    </li>
+                    <li>
+                        <a href="https://my.wulvxinchen.cn/wordbook/">原神词典</a>
+                    </li>
+                    <li>
+                        <a href="https://my.wulvxinchen.cn/helpbaidu">让我帮你百度一下</a>
+                    </li>
+                    <li>
+                        <a href="https://my.wulvxinchen.cn/homo">114514计算器</a>
+                    </li>
+                    <li>
+                        <a href="https://my.wulvxinchen.cn/makewechat/">朋友圈转发生成</a>
+                    </li>
+                    <li>
+                        <a href="https://my.wulvxinchen.cn/todolist">待办列表</a>
+                    </li>
+                    <li>
+                        <a href="https://my.wulvxinchen.cn/myphi">在线Phi模拟器</a>
+                    </li>
+                </ul>
+                    
+            </li>
+            <li class="li">
+                杂七杂八(杂项类)
+                <ul>
+                     <li>
+                        <a href="https://my.wulvxinchen.cn/hutaolive">胡桃Live2D</a>
+                    </li>
+                    <li>
+                        <a href="https://my.wulvxinchen.cn/sunny/">晴天委托</a>
+                    </li>
+                    <li>
+                        <a href="https://my.wulvxinchen.cn/search/">即刻搜索</a>
+                    </li>
+                    <li>
+                        <a href="https://my.wulvxinchen.cn/githubtable.html">GitHub贡献表</a>
+                    </li>
+                    <li>
+                        <a href="https://my.wulvxinchen.cn/fxxkyou/">祖安骂人</a>
+                    </li>
+                    <li>
+                        <a href="https://my.wulvxinchen.cn/PSL/">PSL</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="li">
+                个人链接
+                <ul>
+                    <li>
+                        <a href="https://github.com/drpasserby">GitHub</a>
+                    </li>
+                    <li>
+                        <a href="https://space.bilibili.com/19239632">BiliBili</a>
+                    </li>
+                    <li>
+                        <a href="https://bangumi.tv/user/767656">Bangumi</a>
+                    </li>
+                    <li>
+                        <a href="https://www.acfun.cn/u/3240613">AcFun</a>
+                    </li>
+                    <li>
+                        <a href="https://music.163.com/#/user/home?id=269077414">网易云音乐</a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/@wulvxinchen">YouTube</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</body>
+</html>
