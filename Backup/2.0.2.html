@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="心尘的引导 - 极简导航，输入即达">
+    <title>心尘的引导</title>
+    <link rel="icon" href="https://my.wulvxinchen.cn/pictures/logo/weblogo.ico">
+    <script async src="https://wulvxinchen.cn/access/access.js"></script>
+    <style>
+        :root {
+            --ink: #2b3350;
+            --ink-2: #6f7796;
+            --line: #e3e8f4;
+            --accent: #5b6ba6;
+            --accent-2: #8a98c9;
+            --accent-soft: #eef1fb;
+            --card: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100dvh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+                "Microsoft YaHei", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(1000px 520px at 50% -10%, rgba(138, 152, 201, .30), transparent 62%),
+                linear-gradient(180deg, #f4f6fc, #e9edf8);
+            background-attachment: fixed;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a:focus-visible,
+        input:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* ---------- 舞台（首屏） ---------- */
+        .stage {
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 56px 20px 96px;
+            text-align: center;
+        }
+
+        .brand-mark {
+            width: 58px;
+            height: 58px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            box-shadow: 0 12px 28px -10px rgba(91, 107, 166, .55);
+            animation: rise .5s ease both;
+        }
+
+        .title {
+            margin: 18px 0 0;
+            font-size: clamp(28px, 5.5vw, 40px);
+            font-weight: 600;
+            letter-spacing: 8px;
+            animation: rise .5s .08s ease both;
+        }
+
+        .greet {
+            margin: 10px 0 0;
+            font-size: 13px;
+            color: var(--ink-2);
+            animation: rise .5s .16s ease both;
+        }
+
+        /* ---------- 搜索 ---------- */
+        .search {
+            position: relative;
+            margin-top: 34px;
+            width: min(520px, 100%);
+            animation: rise .5s .24s ease both;
+        }
+
+        .search .icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: var(--ink-2);
+            pointer-events: none;
+        }
+
+        .search input {
+            width: 100%;
+            height: 54px;
+            padding: 0 52px 0 46px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, .85);
+            font-size: 15px;
+            color: var(--ink);
+            outline: none;
+            box-shadow: 0 6px 24px -10px rgba(43, 51, 80, .18);
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .search input::placeholder {
+            color: #a6adc8;
+        }
+
+        .search input:focus {
+            border-color: var(--accent-2);
+            box-shadow: 0 0 0 4px rgba(138, 152, 201, .18), 0 10px 30px -12px rgba(43, 51, 80, .25);
+        }
+
+        .search kbd {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font: 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            color: var(--ink-2);
+            background: #f7f9fe;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 2px 8px;
+            pointer-events: none;
+        }
+
+        .hint {
+            margin-top: 16px;
+            font-size: 12.5px;
+            color: var(--ink-2);
+            animation: rise .5s .32s ease both;
+        }
+
+        .hint button {
+            border: none;
+            background: none;
+            padding: 0;
+            margin: 0 2px;
+            font-size: 12.5px;
+            color: var(--accent);
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        /* ---------- 分类 ---------- */
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+            animation: rise .3s ease both;
+        }
+
+        .chip {
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--ink-2);
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .chip:hover {
+            border-color: var(--accent-2);
+            color: var(--accent);
+        }
+
+        .chip.active {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: #fff;
+            border-color: transparent;
+        }
+
+        /* ---------- 搜索结果 ---------- */
+        .results {
+            margin-top: 14px;
+            width: min(520px, 100%);
+            background: rgba(255, 255, 255, .92);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            box-shadow: 0 18px 44px -18px rgba(43, 51, 80, .30);
+            overflow: hidden;
+            text-align: left;
+            animation: rise .25s ease both;
+        }
+
+        .res-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            text-decoration: none;
+            color: inherit;
+            border-bottom: 1px solid #f0f2fa;
+        }
+
+        .res-row:last-child {
+            border-bottom: none;
+        }
+
+        .res-row .icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            background: var(--accent-soft);
+            border: 1px solid var(--line);
+        }
+
+        .res-row .body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .res-row .t {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .res-row .d {
+            font-size: 12px;
+            color: var(--ink-2);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .res-row .cat {
+            flex-shrink: 0;
+            font-size: 11px;
+            color: var(--accent);
+            background: var(--accent-soft);
+            padding: 2px 9px;
+            border-radius: 999px;
+        }
+
+        .res-row:hover,
+        .res-row.sel {
+            background: var(--accent-soft);
+        }
+
+        .res-empty {
+            padding: 26px;
+            text-align: center;
+            color: var(--ink-2);
+            font-size: 13px;
+        }
+
+        /* ---------- 分类浏览 ---------- */
+        .browse {
+            width: min(860px, 100%);
+            margin-top: 36px;
+            text-align: left;
+            animation: rise .35s ease both;
+        }
+
+        .browse .group {
+            padding-top: 28px;
+        }
+
+        .browse .group:first-child {
+            padding-top: 0;
+        }
+
+        .group-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .group-head .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent-2);
+        }
+
+        .group-head h2 {
+            margin: 0;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        .group-head .count {
+            font-size: 11px;
+            color: var(--ink-2);
+            background: var(--accent-soft);
+            border: 1px solid var(--line);
+            padding: 2px 9px;
+            border-radius: 999px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 13px;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 1px 2px rgba(43, 51, 80, .04), 0 8px 20px -14px rgba(43, 51, 80, .20);
+            transition: transform .18s, box-shadow .18s, border-color .18s;
+        }
+
+        .card .icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            background: var(--accent-soft);
+            border: 1px solid var(--line);
+        }
+
+        .card .body {
+            min-width: 0;
+        }
+
+        .card .t {
+            display: block;
+            font-size: 13.5px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card .d {
+            display: block;
+            font-size: 11.5px;
+            color: var(--ink-2);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (hover: hover) {
+            .card:hover {
+                transform: translateY(-2px);
+                border-color: #cfd8ee;
+                box-shadow: 0 14px 30px -14px rgba(43, 51, 80, .30);
+            }
+
+            .card:hover .t {
+                color: var(--accent);
+            }
+        }
+
+        /* ---------- 页脚 ---------- */
+        footer {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 12px;
+            text-align: center;
+            font-size: 11.5px;
+            color: #98a0bd;
+            pointer-events: none;
+        }
+
+        footer a {
+            color: #8a94b8;
+            text-decoration: none;
+            pointer-events: auto;
+        }
+
+        /* ---------- 响应式 ---------- */
+        @media (max-width: 720px) {
+            body {
+                background-attachment: scroll;
+            }
+
+            .stage {
+                padding: 44px 16px 96px;
+            }
+
+            .title {
+                letter-spacing: 5px;
+            }
+
+            .search input {
+                height: 50px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="stage">
+        <div class="brand-mark" aria-hidden="true">心</div>
+        <h1 class="title">心尘的引导</h1>
+        <p class="greet" id="greet">你好，欢迎回来</p>
+
+        <div class="search">
+            <span class="icon" aria-hidden="true">🔍</span>
+            <input id="search" type="search" placeholder="输入关键词搜索…" aria-label="搜索链接" autocomplete="off">
+            <kbd aria-hidden="true">/</kbd>
+        </div>
+
+        <p class="hint">输入关键词直达 · 或 <button type="button" id="showAll">查看全部链接</button></p>
+
+        <div class="chips" id="chips" hidden>
+            <button type="button" class="chip" data-cat="all">全部</button>
+            <button type="button" class="chip" data-cat="sub">子站</button>
+            <button type="button" class="chip" data-cat="tools">工具</button>
+            <button type="button" class="chip" data-cat="misc">杂项</button>
+            <button type="button" class="chip" data-cat="social">个人</button>
+            <button type="button" class="chip back" id="collapse">收起</button>
+        </div>
+
+        <div class="results" id="results" hidden></div>
+
+        <div class="browse" id="browse" hidden></div>
+    </main>
+
+    <footer>
+        <span>© 心尘 · <a href="https://drpasserby.github.io/" target="_blank" rel="noopener">drpasserby.github.io</a></span>
+    </footer>
+
+    <noscript>
+        <ul>
+            <li><a href="https://my.wulvxinchen.cn/tools2">全新心尘工具集</a></li>
+            <li><a href="https://my.wulvxinchen.cn/tools">心尘工具集</a></li>
+            <li><a href="https://blog.wulvxinchen.cn/">博客站</a></li>
+            <li><a href="https://my.wulvxinchen.cn/pictures">图片站</a></li>
+            <li><a href="http://dl.wulvxinchen.cn:5244/open/图片/">新图片站</a></li>
+            <li><a href="http://dl.wulvxinchen.cn:5244/">下载站</a></li>
+            <li><a href="https://my.wulvxinchen.cn/quicksearchtext/">快速搜索文本</a></li>
+            <li><a href="https://my.wulvxinchen.cn/fastready/">随心而遇</a></li>
+            <li><a href="https://my.wulvxinchen.cn/genshincard">原神名片生成</a></li>
+            <li><a href="https://my.wulvxinchen.cn/wordbook/">原神词典</a></li>
+            <li><a href="https://my.wulvxinchen.cn/helpbaidu">让我帮你百度一下</a></li>
+            <li><a href="https://my.wulvxinchen.cn/homo">114514计算器</a></li>
+            <li><a href="https://my.wulvxinchen.cn/makewechat/">朋友圈转发生成</a></li>
+            <li><a href="https://my.wulvxinchen.cn/todolist">待办列表</a></li>
+            <li><a href="https://my.wulvxinchen.cn/myphi">在线Phi模拟器</a></li>
+            <li><a href="https://my.wulvxinchen.cn/hutaolive">胡桃Live2D</a></li>
+            <li><a href="https://my.wulvxinchen.cn/sunny/">晴天委托</a></li>
+            <li><a href="https://my.wulvxinchen.cn/search/">即刻搜索</a></li>
+            <li><a href="https://my.wulvxinchen.cn/githubtable.html">GitHub贡献表</a></li>
+            <li><a href="https://my.wulvxinchen.cn/fxxkyou/">祖安骂人</a></li>
+            <li><a href="https://my.wulvxinchen.cn/PSL/">PSL</a></li>
+            <li><a href="https://github.com/drpasserby">GitHub</a></li>
+            <li><a href="https://space.bilibili.com/19239632">BiliBili</a></li>
+            <li><a href="https://bangumi.tv/user/767656">Bangumi</a></li>
+            <li><a href="https://www.acfun.cn/u/3240613">AcFun</a></li>
+            <li><a href="https://music.163.com/#/user/home?id=269077414">网易云音乐</a></li>
+            <li><a href="https://www.youtube.com/@wulvxinchen">YouTube</a></li>
+        </ul>
+    </noscript>
+
+    <script>
+        // ---------- 数据 ----------
+        var CAT_LABEL = { quick: '常用', sub: '子站', tools: '工具', misc: '杂项', social: '个人' };
+
+        var DATA = [
+            { cat: 'quick', icon: '✨', title: '全新心尘工具集', desc: '新版工具合集', url: 'https://my.wulvxinchen.cn/tools2' },
+            { cat: 'quick', icon: '🧰', title: '心尘工具集', desc: '工具合集', url: 'https://my.wulvxinchen.cn/tools' },
+
+            { cat: 'sub', icon: '📝', title: '博客站', desc: '个人博客', url: 'https://blog.wulvxinchen.cn/' },
+            { cat: 'sub', icon: '🖼️', title: '图片站', desc: '图片资源站', url: 'https://my.wulvxinchen.cn/pictures' },
+            { cat: 'sub', icon: '🎨', title: '新图片站', desc: '新版图片站', url: 'http://dl.wulvxinchen.cn:5244/open/图片/' },
+            { cat: 'sub', icon: '📦', title: '下载站', desc: '文件下载站', url: 'http://dl.wulvxinchen.cn:5244/' },
+
+            { cat: 'tools', icon: '🔍', title: '快速搜索文本', desc: '批量搜索文本', url: 'https://my.wulvxinchen.cn/quicksearchtext/' },
+            { cat: 'tools', icon: '🍀', title: '随心而遇', desc: '随机偶遇', url: 'https://my.wulvxinchen.cn/fastready/' },
+            { cat: 'tools', icon: '🎴', title: '原神名片生成', desc: '原神名片生成', url: 'https://my.wulvxinchen.cn/genshincard' },
+            { cat: 'tools', icon: '📖', title: '原神词典', desc: '原神术语查询', url: 'https://my.wulvxinchen.cn/wordbook/' },
+            { cat: 'tools', icon: '🤔', title: '让我帮你百度一下', desc: '生成搜索链接', url: 'https://my.wulvxinchen.cn/helpbaidu' },
+            { cat: 'tools', icon: '🧮', title: '114514计算器', desc: '数字计算器', url: 'https://my.wulvxinchen.cn/homo' },
+            { cat: 'tools', icon: '📲', title: '朋友圈转发生成', desc: '转发图片生成', url: 'https://my.wulvxinchen.cn/makewechat/' },
+            { cat: 'tools', icon: '✅', title: '待办列表', desc: '在线待办事项', url: 'https://my.wulvxinchen.cn/todolist' },
+            { cat: 'tools', icon: '🎹', title: '在线Phi模拟器', desc: 'Phi 音游模拟', url: 'https://my.wulvxinchen.cn/myphi' },
+
+            { cat: 'misc', icon: '🍑', title: '胡桃Live2D', desc: '胡桃 Live2D', url: 'https://my.wulvxinchen.cn/hutaolive' },
+            { cat: 'misc', icon: '☀️', title: '晴天委托', desc: '晴天委托助手', url: 'https://my.wulvxinchen.cn/sunny/' },
+            { cat: 'misc', icon: '⚡', title: '即刻搜索', desc: '即时搜索', url: 'https://my.wulvxinchen.cn/search/' },
+            { cat: 'misc', icon: '📊', title: 'GitHub贡献表', desc: '贡献热力图', url: 'https://my.wulvxinchen.cn/githubtable.html' },
+            { cat: 'misc', icon: '😤', title: '祖安骂人', desc: '祖安语录生成', url: 'https://my.wulvxinchen.cn/fxxkyou/' },
+            { cat: 'misc', icon: '📌', title: 'PSL', desc: 'PSL', url: 'https://my.wulvxinchen.cn/PSL/' },
+
+            { cat: 'social', icon: '🐙', title: 'GitHub', desc: '代码仓库', url: 'https://github.com/drpasserby' },
+            { cat: 'social', icon: '📺', title: 'BiliBili', desc: '哔哩哔哩主页', url: 'https://space.bilibili.com/19239632' },
+            { cat: 'social', icon: '🎬', title: 'Bangumi', desc: '番剧记录', url: 'https://bangumi.tv/user/767656' },
+            { cat: 'social', icon: '🎥', title: 'AcFun', desc: 'AcFun 主页', url: 'https://www.acfun.cn/u/3240613' },
+            { cat: 'social', icon: '🎵', title: '网易云音乐', desc: '音乐主页', url: 'https://music.163.com/#/user/home?id=269077414' },
+            { cat: 'social', icon: '▶️', title: 'YouTube', desc: '视频频道', url: 'https://www.youtube.com/@wulvxinchen' }
+        ];
+
+        // 分组顺序与标题
+        var GROUPS = [
+            { cat: 'quick', title: '常用直达' },
+            { cat: 'sub', title: '子站列表' },
+            { cat: 'tools', title: '杂七杂八 · 工具类' },
+            { cat: 'misc', title: '杂七杂八 · 杂项类' },
+            { cat: 'social', title: '个人链接' }
+        ];
+
+        // ---------- DOM ----------
+        var search = document.getElementById('search');
+        var chips = document.getElementById('chips');
+        var results = document.getElementById('results');
+        var browse = document.getElementById('browse');
+        var showAllBtn = document.getElementById('showAll');
+        var collapseBtn = document.getElementById('collapse');
+        var selIndex = -1;
+
+        // ---------- 问候语 ----------
+        (function () {
+            var d = new Date();
+            var h = d.getHours();
+            var greet = h < 5 ? '夜深了，注意休息' :
+                h < 9 ? '早上好' :
+                h < 12 ? '上午好' :
+                h < 14 ? '中午好' :
+                h < 18 ? '下午好' :
+                h < 22 ? '晚上好' : '夜深了，注意休息';
+            document.getElementById('greet').textContent = greet + '，欢迎回来';
+        })();
+
+        // ---------- 渲染 ----------
+        function rowHTML(item) {
+            return '<a class="res-row" href="' + item.url + '" target="_blank" rel="noopener">' +
+                '<span class="icon" aria-hidden="true">' + item.icon + '</span>' +
+                '<span class="body"><span class="t">' + item.title + '</span>' +
+                '<span class="d">' + item.desc + '</span></span>' +
+                '<span class="cat">' + CAT_LABEL[item.cat] + '</span></a>';
+        }
+
+        function renderResults(q) {
+            var list = DATA.filter(function (it) {
+                return (it.title + it.desc + CAT_LABEL[it.cat]).toLowerCase().indexOf(q) !== -1;
+            });
+            if (list.length) {
+                results.innerHTML = list.slice(0, 8).map(rowHTML).join('');
+            } else {
+                results.innerHTML = '<div class="res-empty">没有找到相关链接，换个关键词试试？</div>';
+            }
+            results.hidden = false;
+            browse.hidden = true;
+            setChips(null);
+            selIndex = -1;
+        }
+
+        function cardHTML(item) {
+            return '<a class="card" href="' + item.url + '" target="_blank" rel="noopener">' +
+                '<span class="icon" aria-hidden="true">' + item.icon + '</span>' +
+                '<span class="body"><span class="t">' + item.title + '</span>' +
+                '<span class="d">' + item.desc + '</span></span></a>';
+        }
+
+        function renderBrowse(cat) {
+            var groups = cat === 'all' ? GROUPS : GROUPS.filter(function (g) { return g.cat === cat; });
+            var html = groups.map(function (g) {
+                var items = DATA.filter(function (it) { return it.cat === g.cat; });
+                return '<section class="group">' +
+                    '<div class="group-head"><span class="dot" aria-hidden="true"></span>' +
+                    '<h2>' + g.title + '</h2>' +
+                    '<span class="count">' + items.length + '</span></div>' +
+                    '<div class="grid">' + items.map(cardHTML).join('') + '</div></section>';
+            }).join('');
+            browse.innerHTML = html;
+            browse.hidden = false;
+            results.hidden = true;
+            setChips(cat);
+            selIndex = -1;
+            browse.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function setChips(cat) {
+            var btns = chips.querySelectorAll('.chip');
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].classList.toggle('active', btns[i].dataset.cat === cat);
+            }
+        }
+
+        function backToMinimal() {
+            search.value = '';
+            chips.hidden = true;
+            results.hidden = true;
+            browse.hidden = true;
+            selIndex = -1;
+        }
+
+        // ---------- 交互 ----------
+        search.addEventListener('focus', function () {
+            chips.hidden = false;
+        });
+
+        search.addEventListener('input', function () {
+            var q = search.value.trim().toLowerCase();
+            if (q) {
+                renderResults(q);
+            } else {
+                results.hidden = true;
+                browse.hidden = true;
+                setChips(null);
+                selIndex = -1;
+            }
+        });
+
+        search.addEventListener('keydown', function (e) {
+            var rows = results.querySelectorAll('.res-row');
+            if (e.key === 'ArrowDown' && rows.length) {
+                e.preventDefault();
+                selIndex = (selIndex + 1) % rows.length;
+                highlight(rows);
+            } else if (e.key === 'ArrowUp' && rows.length) {
+                e.preventDefault();
+                selIndex = (selIndex - 1 + rows.length) % rows.length;
+                highlight(rows);
+            } else if (e.key === 'Enter' && rows.length) {
+                e.preventDefault();
+                (rows[selIndex >= 0 ? selIndex : 0]).click();
+            } else if (e.key === 'Escape') {
+                e.preventDefault();
+                backToMinimal();
+                search.blur();
+            }
+        });
+
+        function highlight(rows) {
+            for (var i = 0; i < rows.length; i++) {
+                rows[i].classList.toggle('sel', i === selIndex);
+            }
+            if (rows[selIndex]) rows[selIndex].scrollIntoView({ block: 'nearest' });
+        }
+
+        chips.addEventListener('click', function (e) {
+            var chip = e.target.closest('.chip');
+            if (!chip) return;
+            if (chip.id === 'collapse') {
+                backToMinimal();
+                search.blur();
+                return;
+            }
+            renderBrowse(chip.dataset.cat);
+        });
+
+        showAllBtn.addEventListener('click', function () {
+            chips.hidden = false;
+            renderBrowse('all');
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === '/' && document.activeElement !== search && document.activeElement.tagName !== 'INPUT') {
+                e.preventDefault();
+                search.focus();
+            }
+        });
+    </script>
+</body>
+
+</html>
