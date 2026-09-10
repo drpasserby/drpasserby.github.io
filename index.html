@@ -1,205 +1,717 @@
 <!DOCTYPE html>
-<html lang="Zh-CN">
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="心尘的引导 - 个人导航主页，收录心尘工具集、子站、杂项工具与个人链接">
+    <title>心尘的引导</title>
     <link rel="icon" href="https://my.wulvxinchen.cn/pictures/logo/weblogo.ico">
     <script async src="https://wulvxinchen.cn/access/access.js"></script>
-    <title>心尘的引导</title>
     <style>
+        :root {
+            --bg: #f2f5fc;
+            --bg-2: #e8edf9;
+            --card: #ffffff;
+            --ink: #2b3350;
+            --ink-2: #68708f;
+            --line: #e3e8f4;
+            --accent: #5b6ba6;
+            --accent-2: #8a98c9;
+            --accent-soft: #eef1fb;
+            --radius: 14px;
+            --shadow: 0 1px 2px rgba(43, 51, 80, .05), 0 10px 26px -14px rgba(43, 51, 80, .22);
+        }
+
         * {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            height: 100vh;
-            cursor: url(./my/download/click/normal.cur), auto;
+            margin: 0;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+                "Microsoft YaHei", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(1100px 460px at 88% -12%, rgba(138, 152, 201, .28), transparent 62%),
+                radial-gradient(900px 420px at -12% 18%, rgba(190, 181, 223, .30), transparent 58%),
+                linear-gradient(180deg, var(--bg), var(--bg-2));
+            background-attachment: fixed;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a:focus-visible,
+        input:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* ---------- 顶部 ---------- */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(255, 255, 255, .72);
+            backdrop-filter: blur(14px) saturate(1.5);
+            -webkit-backdrop-filter: blur(14px) saturate(1.5);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .header-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(2) rotate(75)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(229, 80%, 90%, 1)'/><path d='M40 45a5 5 0 110-10 5 5 0 010 10zM0 45a5 5 0 110-10 5 5 0 010 10zM0 5A5 5 0 110-5 5 5 0 010 5zm40 0a5 5 0 110-10 5 5 0 010 10z'  stroke-width='2' stroke='hsla(8, 100%, 84%, 1)' fill='none'/><path d='M20 25a5 5 0 110-10 5 5 0 010 10z'  stroke-width='2' stroke='hsla(198, 0%, 100%, 1)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(-32,-40)' fill='url(%23a)'/></svg>")
-        }
-        .shell{
-            position:fixed;
-            
-            width: 280px;
-            height: 650px;
-            background-color: #8a98c9;
-        }
-        .buttons{
-            margin: 60px 0;
+            font-size: 20px;
+            font-weight: 700;
             color: #fff;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            box-shadow: 0 6px 16px -6px rgba(91, 107, 166, .55);
         }
-        .li{
+
+        .brand h1 {
+            margin: 0;
+            font-size: 18px;
             letter-spacing: 2px;
-            font: 600 17px '';
-            padding: 16px 52px;
-            transition: .3s;
-        }
-        .li::after{
-            content: '';
-            position: absolute;
-            left: 20px;
-            margin-top: -22px;
-            display: block;
-            width: 20px;
-            height: 20px;
-            background-color: #fff;
-            border-radius: 50%;
-        }
-        .buttons>li:hover{
-            background-color: #beb5df;
-        }
-        
-        .li ul{
-            width: 0;
-            height: 530px;
-            padding: 60px 0;
-            position: absolute;
-            top: 0;
-            right: 0;
-            overflow: hidden;
-            background-color: #59699b;
-            transition: .3s;
         }
 
-        .li ul li{
-            padding: 16px 24px;
-            transition: .3s;
+        .brand .sub {
+            margin: 3px 0 0;
+            font-size: 12px;
+            color: var(--ink-2);
         }
 
-        .li:hover ul{
-            width: 228px;
+        .search {
+            margin-left: auto;
+            width: min(340px, 100%);
+            position: relative;
         }
-        .li ul li:hover{
-            background-color: #828eb9;
+
+        .search .search-icon {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--ink-2);
+            font-size: 14px;
+            pointer-events: none;
         }
-        
-        a{
+
+        .search input {
+            width: 100%;
+            padding: 10px 14px 10px 38px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: #fff;
+            font-size: 14px;
+            color: var(--ink);
+            outline: none;
+            transition: border-color .2s, box-shadow .2s;
+            box-shadow: var(--shadow);
+        }
+
+        .search input::placeholder {
+            color: #a6adc8;
+        }
+
+        .search input:focus {
+            border-color: var(--accent-2);
+            box-shadow: 0 0 0 3px rgba(138, 152, 201, .22);
+        }
+
+        /* ---------- 主体 ---------- */
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 24px 20px 56px;
+        }
+
+        /* 常用直达 */
+        .quick {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+
+        .quick-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 18px;
+            border-radius: var(--radius);
+            color: #fff;
             text-decoration: none;
-            user-select: none;
-            color: #ffffff;
-            cursor: url(./my/download/click/link.cur), auto;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 1px;
+            transition: transform .2s, box-shadow .2s;
         }
-        li{
-            user-select: none;
+
+        .quick-card.primary {
+            background: linear-gradient(135deg, #5b6ba6, #8a98c9);
+            box-shadow: 0 10px 24px -10px rgba(91, 107, 166, .55);
         }
-        a:hover{
-            color: #c6c6c6;
+
+        .quick-card.second {
+            background: linear-gradient(135deg, #8a98c9, #beb5df);
+            box-shadow: 0 10px 24px -10px rgba(138, 152, 201, .55);
+        }
+
+        .quick-icon {
+            font-size: 22px;
+        }
+
+        /* 分组 */
+        .group {
+            padding-top: 30px;
+        }
+
+        .group-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .group-head .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-2);
+            flex-shrink: 0;
+        }
+
+        .group-head h2 {
+            margin: 0;
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+
+        .group-head .count {
+            font-size: 12px;
+            color: var(--ink-2);
+            background: var(--accent-soft);
+            border: 1px solid var(--line);
+            padding: 2px 10px;
+            border-radius: 999px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 12px;
+        }
+
+        /* 链接卡片 */
+        .card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 14px;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-decoration: none;
+            color: inherit;
+            transition: transform .18s, box-shadow .18s, border-color .18s;
+        }
+
+        .card-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            background: var(--accent-soft);
+            border: 1px solid var(--line);
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: color .18s;
+        }
+
+        .card-desc {
+            font-size: 12px;
+            color: var(--ink-2);
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (hover: hover) {
+            .card:hover {
+                transform: translateY(-2px);
+                border-color: #cfd8ee;
+                box-shadow: 0 14px 30px -14px rgba(43, 51, 80, .30);
+            }
+
+            .card:hover .card-title {
+                color: var(--accent);
+            }
+
+            .quick-card:hover {
+                transform: translateY(-2px);
+                filter: brightness(1.03);
+            }
+        }
+
+        /* 搜索过滤 */
+        .hidden {
+            display: none !important;
+        }
+
+        .empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 70px 0;
+            color: var(--ink-2);
+            text-align: center;
+        }
+
+        .empty .big {
+            font-size: 40px;
+        }
+
+        .empty p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .empty button {
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--accent);
+            padding: 8px 20px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background .2s;
+        }
+
+        .empty button:hover {
+            background: var(--accent-soft);
+        }
+
+        /* ---------- 页脚 ---------- */
+        footer {
+            border-top: 1px solid var(--line);
+            padding: 22px 20px 30px;
+            text-align: center;
+            font-size: 12.5px;
+            color: var(--ink-2);
+            background: rgba(255, 255, 255, .5);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* ---------- 响应式 ---------- */
+        @media (max-width: 720px) {
+            body {
+                background-attachment: scroll;
+            }
+
+            .header-inner {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .search {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .container {
+                padding: 18px 14px 44px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .quick {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
-    <nav class="shell">
-        <ul class="buttons">
-            <li class="li">
-                <a href="https://my.wulvxinchen.cn/tools2">全新心尘工具集</a>
-            </li>
-            <li class="li">
-                <a href="https://my.wulvxinchen.cn/tools">心尘工具集</a>
-            </li>
-            <li class="li">
-                子站列表
-                <ul>
-                    <li>
-                         <a href="https://blog.wulvxinchen.cn/">博客站</a>
-                    </li>
-                    <li>
-                         <a href="https://my.wulvxinchen.cn/pictures">图片站</a>
-                    </li>
-                    <li>
-                        <a href="http://dl.wulvxinchen.cn:5244/open/图片/">新图片站</a>
-                    </li>
-                    <li>
-                        <a href="http://dl.wulvxinchen.cn:5244/">下载站</a>
-                    </li>
-                </ul>
-            </li>
-            
-            <li class="li">
-                杂七杂八(工具类)
-                <ul>
-                    <li>
-                        <a href="https://my.wulvxinchen.cn/quicksearchtext/">快速搜索文本</a>
-                    </li>
-                    <li>
-                        <a href="https://my.wulvxinchen.cn/fastready/">随心而遇</a>
-                    </li>
-                    <li>
-                        <a href="https://my.wulvxinchen.cn/genshincard">原神名片生成</a>
-                    </li>
-                    <li>
-                        <a href="https://my.wulvxinchen.cn/wordbook/">原神词典</a>
-                    </li>
-                    <li>
-                        <a href="https://my.wulvxinchen.cn/helpbaidu">让我帮你百度一下</a>
-                    </li>
-                    <li>
-                        <a href="https://my.wulvxinchen.cn/homo">114514计算器</a>
-                    </li>
-                    <li>
-                        <a href="https://my.wulvxinchen.cn/makewechat/">朋友圈转发生成</a>
-                    </li>
-                    <li>
-                        <a href="https://my.wulvxinchen.cn/todolist">待办列表</a>
-                    </li>
-                    <li>
-                        <a href="https://my.wulvxinchen.cn/myphi">在线Phi模拟器</a>
-                    </li>
-                </ul>
-                    
-            </li>
-            <li class="li">
-                杂七杂八(杂项类)
-                <ul>
-                     <li>
-                        <a href="https://my.wulvxinchen.cn/hutaolive">胡桃Live2D</a>
-                    </li>
-                    <li>
-                        <a href="https://my.wulvxinchen.cn/sunny/">晴天委托</a>
-                    </li>
-                    <li>
-                        <a href="https://my.wulvxinchen.cn/search/">即刻搜索</a>
-                    </li>
-                    <li>
-                        <a href="https://my.wulvxinchen.cn/githubtable.html">GitHub贡献表</a>
-                    </li>
-                    <li>
-                        <a href="https://my.wulvxinchen.cn/fxxkyou/">祖安骂人</a>
-                    </li>
-                    <li>
-                        <a href="https://my.wulvxinchen.cn/PSL/">PSL</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="li">
-                个人链接
-                <ul>
-                    <li>
-                        <a href="https://github.com/drpasserby">GitHub</a>
-                    </li>
-                    <li>
-                        <a href="https://space.bilibili.com/19239632">BiliBili</a>
-                    </li>
-                    <li>
-                        <a href="https://bangumi.tv/user/767656">Bangumi</a>
-                    </li>
-                    <li>
-                        <a href="https://www.acfun.cn/u/3240613">AcFun</a>
-                    </li>
-                    <li>
-                        <a href="https://music.163.com/#/user/home?id=269077414">网易云音乐</a>
-                    </li>
-                    <li>
-                        <a href="https://www.youtube.com/@wulvxinchen">YouTube</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <div class="brand-mark" aria-hidden="true">心</div>
+                <div>
+                    <h1>心尘的引导</h1>
+                    <p class="sub"><span id="greet">你好</span> · <span id="date"></span></p>
+                </div>
+            </div>
+            <div class="search">
+                <span class="search-icon" aria-hidden="true">🔍</span>
+                <input id="search" type="search" placeholder="搜索链接，如：原神、GitHub…" aria-label="搜索链接" autocomplete="off">
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- 常用直达 -->
+        <section class="quick" aria-label="常用直达">
+            <a class="quick-card primary" href="https://my.wulvxinchen.cn/tools2" target="_blank" rel="noopener">
+                <span class="quick-icon" aria-hidden="true">✨</span>
+                <span>全新心尘工具集</span>
+            </a>
+            <a class="quick-card second" href="https://my.wulvxinchen.cn/tools" target="_blank" rel="noopener">
+                <span class="quick-icon" aria-hidden="true">🧰</span>
+                <span>心尘工具集</span>
+            </a>
+        </section>
+
+        <!-- 子站列表 -->
+        <section class="group" aria-label="子站列表">
+            <div class="group-head">
+                <span class="dot" aria-hidden="true"></span>
+                <h2>子站列表</h2>
+                <span class="count">4</span>
+            </div>
+            <div class="grid">
+                <a class="card" href="https://blog.wulvxinchen.cn/" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">📝</span>
+                    <span class="card-body">
+                        <span class="card-title">博客站</span>
+                        <span class="card-desc">个人博客</span>
+                    </span>
+                </a>
+                <a class="card" href="https://my.wulvxinchen.cn/pictures" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">🖼️</span>
+                    <span class="card-body">
+                        <span class="card-title">图片站</span>
+                        <span class="card-desc">图片资源站</span>
+                    </span>
+                </a>
+                <a class="card" href="http://dl.wulvxinchen.cn:5244/open/图片/" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">🎨</span>
+                    <span class="card-body">
+                        <span class="card-title">新图片站</span>
+                        <span class="card-desc">新版图片站</span>
+                    </span>
+                </a>
+                <a class="card" href="http://dl.wulvxinchen.cn:5244/" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">📦</span>
+                    <span class="card-body">
+                        <span class="card-title">下载站</span>
+                        <span class="card-desc">文件下载站</span>
+                    </span>
+                </a>
+            </div>
+        </section>
+
+        <!-- 杂七杂八 · 工具类 -->
+        <section class="group" aria-label="杂七杂八工具类">
+            <div class="group-head">
+                <span class="dot" aria-hidden="true"></span>
+                <h2>杂七杂八 · 工具类</h2>
+                <span class="count">9</span>
+            </div>
+            <div class="grid">
+                <a class="card" href="https://my.wulvxinchen.cn/quicksearchtext/" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">🔍</span>
+                    <span class="card-body">
+                        <span class="card-title">快速搜索文本</span>
+                        <span class="card-desc">批量搜索文本</span>
+                    </span>
+                </a>
+                <a class="card" href="https://my.wulvxinchen.cn/fastready/" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">🍀</span>
+                    <span class="card-body">
+                        <span class="card-title">随心而遇</span>
+                        <span class="card-desc">随机偶遇</span>
+                    </span>
+                </a>
+                <a class="card" href="https://my.wulvxinchen.cn/genshincard" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">🎴</span>
+                    <span class="card-body">
+                        <span class="card-title">原神名片生成</span>
+                        <span class="card-desc">原神名片生成</span>
+                    </span>
+                </a>
+                <a class="card" href="https://my.wulvxinchen.cn/wordbook/" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">📖</span>
+                    <span class="card-body">
+                        <span class="card-title">原神词典</span>
+                        <span class="card-desc">原神术语查询</span>
+                    </span>
+                </a>
+                <a class="card" href="https://my.wulvxinchen.cn/helpbaidu" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">🤔</span>
+                    <span class="card-body">
+                        <span class="card-title">让我帮你百度一下</span>
+                        <span class="card-desc">生成搜索链接</span>
+                    </span>
+                </a>
+                <a class="card" href="https://my.wulvxinchen.cn/homo" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">🧮</span>
+                    <span class="card-body">
+                        <span class="card-title">114514计算器</span>
+                        <span class="card-desc">数字计算器</span>
+                    </span>
+                </a>
+                <a class="card" href="https://my.wulvxinchen.cn/makewechat/" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">📲</span>
+                    <span class="card-body">
+                        <span class="card-title">朋友圈转发生成</span>
+                        <span class="card-desc">转发图片生成</span>
+                    </span>
+                </a>
+                <a class="card" href="https://my.wulvxinchen.cn/todolist" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">✅</span>
+                    <span class="card-body">
+                        <span class="card-title">待办列表</span>
+                        <span class="card-desc">在线待办事项</span>
+                    </span>
+                </a>
+                <a class="card" href="https://my.wulvxinchen.cn/myphi" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">🎹</span>
+                    <span class="card-body">
+                        <span class="card-title">在线Phi模拟器</span>
+                        <span class="card-desc">Phi 音游模拟</span>
+                    </span>
+                </a>
+            </div>
+        </section>
+
+        <!-- 杂七杂八 · 杂项类 -->
+        <section class="group" aria-label="杂七杂八杂项类">
+            <div class="group-head">
+                <span class="dot" aria-hidden="true"></span>
+                <h2>杂七杂八 · 杂项类</h2>
+                <span class="count">6</span>
+            </div>
+            <div class="grid">
+                <a class="card" href="https://my.wulvxinchen.cn/hutaolive" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">🍑</span>
+                    <span class="card-body">
+                        <span class="card-title">胡桃Live2D</span>
+                        <span class="card-desc">胡桃 Live2D</span>
+                    </span>
+                </a>
+                <a class="card" href="https://my.wulvxinchen.cn/sunny/" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">☀️</span>
+                    <span class="card-body">
+                        <span class="card-title">晴天委托</span>
+                        <span class="card-desc">晴天委托助手</span>
+                    </span>
+                </a>
+                <a class="card" href="https://my.wulvxinchen.cn/search/" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">⚡</span>
+                    <span class="card-body">
+                        <span class="card-title">即刻搜索</span>
+                        <span class="card-desc">即时搜索</span>
+                    </span>
+                </a>
+                <a class="card" href="https://my.wulvxinchen.cn/githubtable.html" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">📊</span>
+                    <span class="card-body">
+                        <span class="card-title">GitHub贡献表</span>
+                        <span class="card-desc">贡献热力图</span>
+                    </span>
+                </a>
+                <a class="card" href="https://my.wulvxinchen.cn/fxxkyou/" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">😤</span>
+                    <span class="card-body">
+                        <span class="card-title">祖安骂人</span>
+                        <span class="card-desc">祖安语录生成</span>
+                    </span>
+                </a>
+                <a class="card" href="https://my.wulvxinchen.cn/PSL/" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">📌</span>
+                    <span class="card-body">
+                        <span class="card-title">PSL</span>
+                        <span class="card-desc">PSL</span>
+                    </span>
+                </a>
+            </div>
+        </section>
+
+        <!-- 个人链接 -->
+        <section class="group" aria-label="个人链接">
+            <div class="group-head">
+                <span class="dot" aria-hidden="true"></span>
+                <h2>个人链接</h2>
+                <span class="count">6</span>
+            </div>
+            <div class="grid">
+                <a class="card" href="https://github.com/drpasserby" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">🐙</span>
+                    <span class="card-body">
+                        <span class="card-title">GitHub</span>
+                        <span class="card-desc">代码仓库</span>
+                    </span>
+                </a>
+                <a class="card" href="https://space.bilibili.com/19239632" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">📺</span>
+                    <span class="card-body">
+                        <span class="card-title">BiliBili</span>
+                        <span class="card-desc">哔哩哔哩主页</span>
+                    </span>
+                </a>
+                <a class="card" href="https://bangumi.tv/user/767656" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">🎬</span>
+                    <span class="card-body">
+                        <span class="card-title">Bangumi</span>
+                        <span class="card-desc">番剧记录</span>
+                    </span>
+                </a>
+                <a class="card" href="https://www.acfun.cn/u/3240613" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">🎥</span>
+                    <span class="card-body">
+                        <span class="card-title">AcFun</span>
+                        <span class="card-desc">AcFun 主页</span>
+                    </span>
+                </a>
+                <a class="card" href="https://music.163.com/#/user/home?id=269077414" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">🎵</span>
+                    <span class="card-body">
+                        <span class="card-title">网易云音乐</span>
+                        <span class="card-desc">音乐主页</span>
+                    </span>
+                </a>
+                <a class="card" href="https://www.youtube.com/@wulvxinchen" target="_blank" rel="noopener">
+                    <span class="card-icon" aria-hidden="true">▶️</span>
+                    <span class="card-body">
+                        <span class="card-title">YouTube</span>
+                        <span class="card-desc">视频频道</span>
+                    </span>
+                </a>
+            </div>
+        </section>
+
+        <!-- 搜索无结果 -->
+        <div class="empty" id="empty" hidden>
+            <span class="big" aria-hidden="true">🔍</span>
+            <p>没有找到相关链接，换个关键词试试？</p>
+            <button type="button" onclick="clearSearch()">清除搜索</button>
+        </div>
+    </main>
+
+    <footer>
+        <span>© 心尘 · <a href="https://drpasserby.github.io/" target="_blank" rel="noopener">drpasserby.github.io</a></span>
+    </footer>
+
+    <script>
+        // ---------- 问候语与日期 ----------
+        (function () {
+            var d = new Date();
+            var h = d.getHours();
+            var greet = h < 5 ? '夜深了，注意休息' :
+                h < 9 ? '早上好' :
+                h < 12 ? '上午好' :
+                h < 14 ? '中午好' :
+                h < 18 ? '下午好' :
+                h < 22 ? '晚上好' : '夜深了，注意休息';
+            var week = ['日', '一', '二', '三', '四', '五', '六'][d.getDay()];
+            document.getElementById('greet').textContent = greet + '，欢迎回来';
+            document.getElementById('date').textContent = '星期' + week + ' · ' + (d.getMonth() + 1) + '月' + d.getDate() + '日';
+        })();
+
+        // ---------- 搜索过滤 ----------
+        var search = document.getElementById('search');
+        var empty = document.getElementById('empty');
+
+        var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+        cards.forEach(function (c) {
+            var sec = c.closest('.group');
+            var secTitle = sec ? sec.querySelector('.group-head h2').textContent : '';
+            c._key = (c.textContent + ' ' + secTitle).toLowerCase();
+        });
+
+        function applyFilter() {
+            var q = search.value.trim().toLowerCase();
+            var total = 0;
+            document.querySelectorAll('.group').forEach(function (sec) {
+                var any = false;
+                sec.querySelectorAll('.card').forEach(function (c) {
+                    var hit = !q || c._key.indexOf(q) !== -1;
+                    c.classList.toggle('hidden', !hit);
+                    if (hit) any = true;
+                });
+                sec.classList.toggle('hidden', !any);
+                if (any) total += sec.querySelectorAll('.card:not(.hidden)').length;
+            });
+            empty.hidden = total !== 0 || q === '';
+        }
+
+        search.addEventListener('input', applyFilter);
+
+        // 快捷键：/ 聚焦搜索，Esc 清空搜索
+        document.addEventListener('keydown', function (e) {
+            if (e.key === '/' && document.activeElement !== search) {
+                e.preventDefault();
+                search.focus();
+            }
+            if (e.key === 'Escape' && search.value) {
+                search.value = '';
+                applyFilter();
+            }
+        });
+
+        function clearSearch() {
+            search.value = '';
+            applyFilter();
+            search.focus();
+        }
+    </script>
 </body>
+
 </html>
