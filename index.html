@@ -4,19 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="心尘的引导 - 极简导航，输入即达">
+    <meta name="description" content="心尘的引导 - 轻简导航">
     <title>心尘的引导</title>
     <link rel="icon" href="https://my.wulvxinchen.cn/pictures/logo/weblogo.ico">
     <script async src="https://wulvxinchen.cn/access/access.js"></script>
     <style>
         :root {
-            --ink: #2b3350;
-            --ink-2: #6f7796;
-            --line: #e3e8f4;
-            --accent: #5b6ba6;
-            --accent-2: #8a98c9;
-            --accent-soft: #eef1fb;
-            --card: #ffffff;
+            --bg: #f7f5f1;
+            --ink: #26262e;
+            --ink-2: #807c8a;
+            --line: #e5e1d8;
+            --accent: #5c5f8a;
+            --accent-deep: #46496e;
+            --accent-2: #8b84ad;
+            --accent-soft: #efedf6;
+            --card: #fffefb;
+            --terra: #c08a6e;
+            --shadow: 0 1px 2px rgba(38, 38, 46, .04), 0 12px 28px -18px rgba(38, 38, 46, .22);
         }
 
         * {
@@ -33,10 +37,14 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
                 "Microsoft YaHei", Roboto, "Helvetica Neue", Arial, sans-serif;
             color: var(--ink);
+            /* 双色点阵，致敬原版 index.html 的圆点纹理 */
             background:
-                radial-gradient(1000px 520px at 50% -10%, rgba(138, 152, 201, .30), transparent 62%),
-                linear-gradient(180deg, #f4f6fc, #e9edf8);
-            background-attachment: fixed;
+                radial-gradient(1000px 520px at 50% -12%, rgba(92, 95, 138, .13), transparent 62%),
+                radial-gradient(rgba(92, 95, 138, .17) 1.2px, transparent 1.3px),
+                radial-gradient(rgba(192, 138, 110, .14) 1.2px, transparent 1.3px),
+                linear-gradient(180deg, #f7f5f1, #f0ede6);
+            background-size: auto, 24px 24px, 24px 24px, auto;
+            background-position: 0 0, 0 0, 12px 12px, 0 0;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -45,7 +53,6 @@
         }
 
         a:focus-visible,
-        input:focus-visible,
         button:focus-visible {
             outline: 2px solid var(--accent);
             outline-offset: 2px;
@@ -80,101 +87,29 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
-            font-weight: 700;
+            font-size: 25px;
+            font-weight: 600;
             color: #fff;
-            background: linear-gradient(135deg, var(--accent), var(--accent-2));
-            box-shadow: 0 12px 28px -10px rgba(91, 107, 166, .55);
+            background: linear-gradient(135deg, var(--accent-deep), var(--accent-2));
+            box-shadow: 0 12px 28px -10px rgba(70, 73, 110, .5);
             animation: rise .5s ease both;
         }
 
         .title {
-            margin: 18px 0 0;
-            font-size: clamp(28px, 5.5vw, 40px);
+            margin: 20px 0 0;
+            font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;
+            font-size: clamp(30px, 5.5vw, 42px);
             font-weight: 600;
-            letter-spacing: 8px;
+            letter-spacing: .14em;
             animation: rise .5s .08s ease both;
         }
 
         .greet {
-            margin: 10px 0 0;
+            margin: 12px 0 0;
             font-size: 13px;
             color: var(--ink-2);
+            letter-spacing: .05em;
             animation: rise .5s .16s ease both;
-        }
-
-        /* ---------- 搜索 ---------- */
-        .search {
-            position: relative;
-            margin-top: 34px;
-            width: min(520px, 100%);
-            animation: rise .5s .24s ease both;
-        }
-
-        .search .icon {
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 16px;
-            color: var(--ink-2);
-            pointer-events: none;
-        }
-
-        .search input {
-            width: 100%;
-            height: 54px;
-            padding: 0 52px 0 46px;
-            border-radius: 999px;
-            border: 1px solid var(--line);
-            background: rgba(255, 255, 255, .85);
-            font-size: 15px;
-            color: var(--ink);
-            outline: none;
-            box-shadow: 0 6px 24px -10px rgba(43, 51, 80, .18);
-            transition: border-color .2s, box-shadow .2s;
-        }
-
-        .search input::placeholder {
-            color: #a6adc8;
-        }
-
-        .search input:focus {
-            border-color: var(--accent-2);
-            box-shadow: 0 0 0 4px rgba(138, 152, 201, .18), 0 10px 30px -12px rgba(43, 51, 80, .25);
-        }
-
-        .search kbd {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            font: 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-            color: var(--ink-2);
-            background: #f7f9fe;
-            border: 1px solid var(--line);
-            border-radius: 6px;
-            padding: 2px 8px;
-            pointer-events: none;
-        }
-
-        .hint {
-            margin-top: 16px;
-            font-size: 12.5px;
-            color: var(--ink-2);
-            animation: rise .5s .32s ease both;
-        }
-
-        .hint button {
-            border: none;
-            background: none;
-            padding: 0;
-            margin: 0 2px;
-            font-size: 12.5px;
-            color: var(--accent);
-            cursor: pointer;
-            text-decoration: underline;
-            text-underline-offset: 3px;
         }
 
         /* ---------- 分类 ---------- */
@@ -182,124 +117,48 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 8px;
-            margin-top: 24px;
-            animation: rise .3s ease both;
+            gap: 10px;
+            margin-top: 38px;
+            animation: rise .5s .24s ease both;
         }
 
         .chip {
             border: 1px solid var(--line);
-            background: #fff;
+            background: rgba(255, 255, 255, .72);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             color: var(--ink-2);
-            padding: 8px 16px;
+            padding: 9px 20px;
             border-radius: 999px;
             font-size: 13px;
+            letter-spacing: .08em;
             cursor: pointer;
-            transition: .2s;
+            transition: background .2s, color .2s, border-color .2s, box-shadow .2s;
         }
 
         .chip:hover {
+            background: #fff;
             border-color: var(--accent-2);
             color: var(--accent);
         }
 
         .chip.active {
-            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            background: linear-gradient(135deg, var(--accent-deep), var(--accent-2));
             color: #fff;
             border-color: transparent;
-        }
-
-        /* ---------- 搜索结果 ---------- */
-        .results {
-            margin-top: 14px;
-            width: min(520px, 100%);
-            background: rgba(255, 255, 255, .92);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--line);
-            border-radius: 18px;
-            box-shadow: 0 18px 44px -18px rgba(43, 51, 80, .30);
-            overflow: hidden;
-            text-align: left;
-            animation: rise .25s ease both;
-        }
-
-        .res-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            text-decoration: none;
-            color: inherit;
-            border-bottom: 1px solid #f0f2fa;
-        }
-
-        .res-row:last-child {
-            border-bottom: none;
-        }
-
-        .res-row .icon {
-            width: 34px;
-            height: 34px;
-            border-radius: 10px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            background: var(--accent-soft);
-            border: 1px solid var(--line);
-        }
-
-        .res-row .body {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .res-row .t {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .res-row .d {
-            font-size: 12px;
-            color: var(--ink-2);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .res-row .cat {
-            flex-shrink: 0;
-            font-size: 11px;
-            color: var(--accent);
-            background: var(--accent-soft);
-            padding: 2px 9px;
-            border-radius: 999px;
-        }
-
-        .res-row:hover,
-        .res-row.sel {
-            background: var(--accent-soft);
-        }
-
-        .res-empty {
-            padding: 26px;
-            text-align: center;
-            color: var(--ink-2);
-            font-size: 13px;
+            box-shadow: 0 10px 22px -10px rgba(70, 73, 110, .55);
         }
 
         /* ---------- 分类浏览 ---------- */
         .browse {
-            width: min(860px, 100%);
-            margin-top: 36px;
+            width: min(880px, 100%);
+            margin-top: 40px;
             text-align: left;
             animation: rise .35s ease both;
         }
 
         .browse .group {
-            padding-top: 28px;
+            padding-top: 32px;
         }
 
         .browse .group:first-child {
@@ -310,7 +169,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .group-head .dot {
@@ -323,7 +182,8 @@
         .group-head h2 {
             margin: 0;
             font-size: 14px;
-            letter-spacing: 2px;
+            letter-spacing: .18em;
+            color: var(--ink);
         }
 
         .group-head .count {
@@ -331,39 +191,39 @@
             color: var(--ink-2);
             background: var(--accent-soft);
             border: 1px solid var(--line);
-            padding: 2px 9px;
+            padding: 2px 10px;
             border-radius: 999px;
         }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 10px;
+            gap: 12px;
         }
 
         .card {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 11px 13px;
+            gap: 12px;
+            padding: 13px 15px;
             background: var(--card);
             border: 1px solid var(--line);
             border-radius: 14px;
             text-decoration: none;
             color: inherit;
-            box-shadow: 0 1px 2px rgba(43, 51, 80, .04), 0 8px 20px -14px rgba(43, 51, 80, .20);
+            box-shadow: var(--shadow);
             transition: transform .18s, box-shadow .18s, border-color .18s;
         }
 
         .card .icon {
-            width: 34px;
-            height: 34px;
+            width: 36px;
+            height: 36px;
             border-radius: 10px;
             flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 17px;
             background: var(--accent-soft);
             border: 1px solid var(--line);
         }
@@ -376,6 +236,7 @@
             display: block;
             font-size: 13.5px;
             font-weight: 600;
+            letter-spacing: .03em;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -385,6 +246,7 @@
             display: block;
             font-size: 11.5px;
             color: var(--ink-2);
+            margin-top: 1px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -393,8 +255,8 @@
         @media (hover: hover) {
             .card:hover {
                 transform: translateY(-2px);
-                border-color: #cfd8ee;
-                box-shadow: 0 14px 30px -14px rgba(43, 51, 80, .30);
+                border-color: #d5cfc2;
+                box-shadow: 0 16px 34px -18px rgba(38, 38, 46, .32);
             }
 
             .card:hover .t {
@@ -407,35 +269,27 @@
             position: fixed;
             left: 0;
             right: 0;
-            bottom: 12px;
+            bottom: 14px;
             text-align: center;
             font-size: 11.5px;
-            color: #98a0bd;
+            color: #a39fae;
             pointer-events: none;
         }
 
         footer a {
-            color: #8a94b8;
+            color: #8f8b9c;
             text-decoration: none;
             pointer-events: auto;
         }
 
         /* ---------- 响应式 ---------- */
         @media (max-width: 720px) {
-            body {
-                background-attachment: scroll;
-            }
-
             .stage {
                 padding: 44px 16px 96px;
             }
 
             .title {
-                letter-spacing: 5px;
-            }
-
-            .search input {
-                height: 50px;
+                letter-spacing: .1em;
             }
 
             .grid {
@@ -457,24 +311,14 @@
         <h1 class="title">心尘的引导</h1>
         <p class="greet" id="greet">你好，欢迎回来</p>
 
-        <div class="search">
-            <span class="icon" aria-hidden="true">🔍</span>
-            <input id="search" type="search" placeholder="输入关键词搜索…" aria-label="搜索链接" autocomplete="off">
-            <kbd aria-hidden="true">/</kbd>
-        </div>
-
-        <p class="hint">输入关键词直达 · 或 <button type="button" id="showAll">查看全部链接</button></p>
-
-        <div class="chips" id="chips" hidden>
+        <div class="chips" id="chips">
             <button type="button" class="chip" data-cat="all">全部</button>
             <button type="button" class="chip" data-cat="sub">子站</button>
             <button type="button" class="chip" data-cat="tools">工具</button>
             <button type="button" class="chip" data-cat="misc">杂项</button>
             <button type="button" class="chip" data-cat="social">个人</button>
-            <button type="button" class="chip back" id="collapse">收起</button>
+            <button type="button" class="chip" id="collapse" hidden>收起</button>
         </div>
-
-        <div class="results" id="results" hidden></div>
 
         <div class="browse" id="browse" hidden></div>
     </main>
@@ -517,7 +361,13 @@
 
     <script>
         // ---------- 数据 ----------
-        var CAT_LABEL = { quick: '常用', sub: '子站', tools: '工具', misc: '杂项', social: '个人' };
+        var GROUPS = [
+            { cat: 'quick', title: '常用直达' },
+            { cat: 'sub', title: '子站列表' },
+            { cat: 'tools', title: '杂七杂八 · 工具类' },
+            { cat: 'misc', title: '杂七杂八 · 杂项类' },
+            { cat: 'social', title: '个人链接' }
+        ];
 
         var DATA = [
             { cat: 'quick', icon: '✨', title: '全新心尘工具集', desc: '新版工具合集', url: 'https://my.wulvxinchen.cn/tools2' },
@@ -553,23 +403,10 @@
             { cat: 'social', icon: '▶️', title: 'YouTube', desc: '视频频道', url: 'https://www.youtube.com/@wulvxinchen' }
         ];
 
-        // 分组顺序与标题
-        var GROUPS = [
-            { cat: 'quick', title: '常用直达' },
-            { cat: 'sub', title: '子站列表' },
-            { cat: 'tools', title: '杂七杂八 · 工具类' },
-            { cat: 'misc', title: '杂七杂八 · 杂项类' },
-            { cat: 'social', title: '个人链接' }
-        ];
-
         // ---------- DOM ----------
-        var search = document.getElementById('search');
         var chips = document.getElementById('chips');
-        var results = document.getElementById('results');
         var browse = document.getElementById('browse');
-        var showAllBtn = document.getElementById('showAll');
         var collapseBtn = document.getElementById('collapse');
-        var selIndex = -1;
 
         // ---------- 问候语 ----------
         (function () {
@@ -585,29 +422,6 @@
         })();
 
         // ---------- 渲染 ----------
-        function rowHTML(item) {
-            return '<a class="res-row" href="' + item.url + '" target="_blank" rel="noopener">' +
-                '<span class="icon" aria-hidden="true">' + item.icon + '</span>' +
-                '<span class="body"><span class="t">' + item.title + '</span>' +
-                '<span class="d">' + item.desc + '</span></span>' +
-                '<span class="cat">' + CAT_LABEL[item.cat] + '</span></a>';
-        }
-
-        function renderResults(q) {
-            var list = DATA.filter(function (it) {
-                return (it.title + it.desc + CAT_LABEL[it.cat]).toLowerCase().indexOf(q) !== -1;
-            });
-            if (list.length) {
-                results.innerHTML = list.slice(0, 8).map(rowHTML).join('');
-            } else {
-                results.innerHTML = '<div class="res-empty">没有找到相关链接，换个关键词试试？</div>';
-            }
-            results.hidden = false;
-            browse.hidden = true;
-            setChips(null);
-            selIndex = -1;
-        }
-
         function cardHTML(item) {
             return '<a class="card" href="' + item.url + '" target="_blank" rel="noopener">' +
                 '<span class="icon" aria-hidden="true">' + item.icon + '</span>' +
@@ -627,91 +441,43 @@
             }).join('');
             browse.innerHTML = html;
             browse.hidden = false;
-            results.hidden = true;
-            setChips(cat);
-            selIndex = -1;
+            collapseBtn.hidden = false;
+            setActive(cat);
             browse.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        function setChips(cat) {
+        function setActive(cat) {
             var btns = chips.querySelectorAll('.chip');
             for (var i = 0; i < btns.length; i++) {
                 btns[i].classList.toggle('active', btns[i].dataset.cat === cat);
             }
         }
 
-        function backToMinimal() {
-            search.value = '';
-            chips.hidden = true;
-            results.hidden = true;
+        function collapse() {
             browse.hidden = true;
-            selIndex = -1;
+            collapseBtn.hidden = true;
+            setActive(null);
         }
 
         // ---------- 交互 ----------
-        search.addEventListener('focus', function () {
-            chips.hidden = false;
-        });
-
-        search.addEventListener('input', function () {
-            var q = search.value.trim().toLowerCase();
-            if (q) {
-                renderResults(q);
-            } else {
-                results.hidden = true;
-                browse.hidden = true;
-                setChips(null);
-                selIndex = -1;
-            }
-        });
-
-        search.addEventListener('keydown', function (e) {
-            var rows = results.querySelectorAll('.res-row');
-            if (e.key === 'ArrowDown' && rows.length) {
-                e.preventDefault();
-                selIndex = (selIndex + 1) % rows.length;
-                highlight(rows);
-            } else if (e.key === 'ArrowUp' && rows.length) {
-                e.preventDefault();
-                selIndex = (selIndex - 1 + rows.length) % rows.length;
-                highlight(rows);
-            } else if (e.key === 'Enter' && rows.length) {
-                e.preventDefault();
-                (rows[selIndex >= 0 ? selIndex : 0]).click();
-            } else if (e.key === 'Escape') {
-                e.preventDefault();
-                backToMinimal();
-                search.blur();
-            }
-        });
-
-        function highlight(rows) {
-            for (var i = 0; i < rows.length; i++) {
-                rows[i].classList.toggle('sel', i === selIndex);
-            }
-            if (rows[selIndex]) rows[selIndex].scrollIntoView({ block: 'nearest' });
-        }
-
         chips.addEventListener('click', function (e) {
             var chip = e.target.closest('.chip');
             if (!chip) return;
             if (chip.id === 'collapse') {
-                backToMinimal();
-                search.blur();
+                collapse();
+                return;
+            }
+            // 再次点击当前分类则收起
+            if (chip.classList.contains('active')) {
+                collapse();
                 return;
             }
             renderBrowse(chip.dataset.cat);
         });
 
-        showAllBtn.addEventListener('click', function () {
-            chips.hidden = false;
-            renderBrowse('all');
-        });
-
         document.addEventListener('keydown', function (e) {
-            if (e.key === '/' && document.activeElement !== search && document.activeElement.tagName !== 'INPUT') {
-                e.preventDefault();
-                search.focus();
+            if (e.key === 'Escape' && !browse.hidden) {
+                collapse();
             }
         });
     </script>
