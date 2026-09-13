@@ -10,17 +10,49 @@
     <script async src="https://wulvxinchen.cn/access/access.js"></script>
     <style>
         :root {
-            --bg: #f7f5f1;
-            --ink: #26262e;
-            --ink-2: #807c8a;
-            --line: #e5e1d8;
-            --accent: #5c5f8a;
-            --accent-deep: #46496e;
-            --accent-2: #8b84ad;
-            --accent-soft: #efedf6;
-            --card: #fffefb;
-            --terra: #c08a6e;
-            --shadow: 0 1px 2px rgba(38, 38, 46, .04), 0 12px 28px -18px rgba(38, 38, 46, .22);
+            color-scheme: light;
+            --bg-top: #eceef7;
+            --bg-bottom: #e3e6f2;
+            --card: #fdfdff;
+            --ink: #33364a;
+            --ink-2: #767b92;
+            --line: #dde0ec;
+            --accent: #5f6290;
+            --accent-deep: #4a4d74;
+            --accent-2: #8f92b8;
+            --accent-soft: #edeff8;
+            --terra: #c49a80;
+            --glow: rgba(95, 98, 144, .11);
+            --dot-a: rgba(95, 98, 144, .14);
+            --dot-b: rgba(196, 154, 128, .12);
+            --shadow: 0 1px 2px rgba(51, 54, 74, .05), 0 12px 28px -18px rgba(51, 54, 74, .20);
+            --hover-shadow: 0 16px 34px -18px rgba(51, 54, 74, .30);
+            --toggle-bg: rgba(255, 255, 255, .72);
+            --foot: #a09caa;
+            --foot-link: #8f8b9c;
+        }
+
+        [data-theme="dark"] {
+            color-scheme: dark;
+            --bg-top: #1a1c29;
+            --bg-bottom: #12131d;
+            --card: #23253a;
+            --ink: #e8e9f4;
+            --ink-2: #9a9db8;
+            --line: #333650;
+            --accent: #9aa0d8;
+            --accent-deep: #7b80c0;
+            --accent-2: #b3b6e0;
+            --accent-soft: #2b2e45;
+            --terra: #d3a488;
+            --glow: rgba(120, 126, 200, .16);
+            --dot-a: rgba(180, 185, 220, .12);
+            --dot-b: rgba(211, 164, 136, .09);
+            --shadow: 0 1px 2px rgba(0, 0, 0, .30), 0 14px 30px -18px rgba(0, 0, 0, .55);
+            --hover-shadow: 0 18px 38px -20px rgba(0, 0, 0, .60);
+            --toggle-bg: rgba(35, 37, 58, .65);
+            --foot: #6f738f;
+            --foot-link: #8b8fb0;
         }
 
         * {
@@ -37,15 +69,16 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
                 "Microsoft YaHei", Roboto, "Helvetica Neue", Arial, sans-serif;
             color: var(--ink);
-            /* 双色点阵，致敬原版 index.html 的圆点纹理 */
+            /* 双色点阵，致敬原版 index.html 的圆点纹理；亮度参照原版柔和浅紫 */
             background:
-                radial-gradient(1000px 520px at 50% -12%, rgba(92, 95, 138, .13), transparent 62%),
-                radial-gradient(rgba(92, 95, 138, .17) 1.2px, transparent 1.3px),
-                radial-gradient(rgba(192, 138, 110, .14) 1.2px, transparent 1.3px),
-                linear-gradient(180deg, #f7f5f1, #f0ede6);
+                radial-gradient(1000px 520px at 50% -12%, var(--glow), transparent 62%),
+                radial-gradient(var(--dot-a) 1.2px, transparent 1.3px),
+                radial-gradient(var(--dot-b) 1.2px, transparent 1.3px),
+                linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
             background-size: auto, 24px 24px, 24px 24px, auto;
             background-position: 0 0, 0 0, 12px 12px, 0 0;
             -webkit-font-smoothing: antialiased;
+            transition: color .3s ease;
         }
 
         a {
@@ -67,6 +100,34 @@
                 opacity: 1;
                 transform: none;
             }
+        }
+
+        /* ---------- 主题切换（右上角，低调） ---------- */
+        .theme-toggle {
+            position: fixed;
+            top: 14px;
+            right: 14px;
+            z-index: 20;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid var(--line);
+            background: var(--toggle-bg);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            font-size: 15px;
+            line-height: 1;
+            cursor: pointer;
+            opacity: .55;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity .2s, transform .2s, background-color .3s, border-color .3s;
+        }
+
+        .theme-toggle:hover {
+            opacity: 1;
+            transform: rotate(12deg);
         }
 
         /* ---------- 舞台（首屏） ---------- */
@@ -124,7 +185,7 @@
 
         .chip {
             border: 1px solid var(--line);
-            background: rgba(255, 255, 255, .72);
+            background: var(--toggle-bg);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
             color: var(--ink-2);
@@ -133,11 +194,11 @@
             font-size: 13px;
             letter-spacing: .08em;
             cursor: pointer;
-            transition: background .2s, color .2s, border-color .2s, box-shadow .2s;
+            transition: background-color .25s, color .25s, border-color .25s, box-shadow .25s;
         }
 
         .chip:hover {
-            background: #fff;
+            background: var(--card);
             border-color: var(--accent-2);
             color: var(--accent);
         }
@@ -212,7 +273,7 @@
             text-decoration: none;
             color: inherit;
             box-shadow: var(--shadow);
-            transition: transform .18s, box-shadow .18s, border-color .18s;
+            transition: transform .18s, box-shadow .18s, border-color .18s, background-color .3s;
         }
 
         .card .icon {
@@ -237,9 +298,11 @@
             font-size: 13.5px;
             font-weight: 600;
             letter-spacing: .03em;
+            color: var(--ink);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            transition: color .25s;
         }
 
         .card .d {
@@ -255,8 +318,8 @@
         @media (hover: hover) {
             .card:hover {
                 transform: translateY(-2px);
-                border-color: #d5cfc2;
-                box-shadow: 0 16px 34px -18px rgba(38, 38, 46, .32);
+                border-color: var(--accent-2);
+                box-shadow: var(--hover-shadow);
             }
 
             .card:hover .t {
@@ -272,12 +335,12 @@
             bottom: 14px;
             text-align: center;
             font-size: 11.5px;
-            color: #a39fae;
+            color: var(--foot);
             pointer-events: none;
         }
 
         footer a {
-            color: #8f8b9c;
+            color: var(--foot-link);
             text-decoration: none;
             pointer-events: auto;
         }
@@ -306,6 +369,8 @@
 </head>
 
 <body>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="切换深浅色模式">🌙</button>
+
     <main class="stage">
         <div class="brand-mark" aria-hidden="true">心</div>
         <h1 class="title">心尘的引导</h1>
@@ -407,6 +472,27 @@
         var chips = document.getElementById('chips');
         var browse = document.getElementById('browse');
         var collapseBtn = document.getElementById('collapse');
+
+        // ---------- 主题 ----------
+        var root = document.documentElement;
+        var toggleBtn = document.getElementById('themeToggle');
+
+        function applyTheme(theme) {
+            root.setAttribute('data-theme', theme);
+            toggleBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+            try { localStorage.setItem('xinchen-theme', theme); } catch (e) { /* 忽略 */ }
+        }
+
+        (function initTheme() {
+            var saved = null;
+            try { saved = localStorage.getItem('xinchen-theme'); } catch (e) { /* 忽略 */ }
+            var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            applyTheme(saved || (prefersDark ? 'dark' : 'light'));
+        })();
+
+        toggleBtn.addEventListener('click', function () {
+            applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        });
 
         // ---------- 问候语 ----------
         (function () {
