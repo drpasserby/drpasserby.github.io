@@ -173,44 +173,38 @@
             animation: rise .5s .16s ease both;
         }
 
-        /* ---------- 分类 ---------- */
-        .chips {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 38px;
-            animation: rise .5s .24s ease both;
-        }
-
-        .chip {
+        /* ---------- 落语按钮 ---------- */
+        .entry {
+            margin-top: 40px;
+            padding: 13px 48px;
             border: 1px solid var(--line);
+            border-radius: 999px;
             background: var(--toggle-bg);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
-            color: var(--ink-2);
-            padding: 9px 20px;
-            border-radius: 999px;
-            font-size: 13px;
-            letter-spacing: .08em;
+            color: var(--ink);
+            font-size: 15px;
+            letter-spacing: .3em;
+            text-indent: .3em;
             cursor: pointer;
             transition: background-color .25s, color .25s, border-color .25s, box-shadow .25s;
+            animation: rise .5s .24s ease both;
         }
 
-        .chip:hover {
+        .entry:hover {
             background: var(--card);
             border-color: var(--accent-2);
             color: var(--accent);
         }
 
-        .chip.active {
+        .entry.active {
             background: linear-gradient(135deg, var(--accent-deep), var(--accent-2));
             color: #fff;
             border-color: transparent;
             box-shadow: 0 10px 22px -10px rgba(70, 73, 110, .55);
         }
 
-        /* ---------- 分类浏览 ---------- */
+        /* ---------- 全部网站 ---------- */
         .browse {
             width: min(880px, 100%);
             margin-top: 40px;
@@ -376,20 +370,13 @@
         <h1 class="title">心尘的引导</h1>
         <p class="greet" id="greet">你好，欢迎回来</p>
 
-        <div class="chips" id="chips">
-            <button type="button" class="chip" data-cat="all">全部</button>
-            <button type="button" class="chip" data-cat="sub">子站</button>
-            <button type="button" class="chip" data-cat="tools">工具</button>
-            <button type="button" class="chip" data-cat="misc">杂项</button>
-            <button type="button" class="chip" data-cat="social">个人</button>
-            <button type="button" class="chip" id="collapse" hidden>收起</button>
-        </div>
+        <button type="button" class="entry" id="entry" aria-expanded="false">落语</button>
 
         <div class="browse" id="browse" hidden></div>
     </main>
 
     <footer>
-        <span>© 心尘 · <a href="https://drpasserby.github.io/" target="_blank" rel="noopener">drpasserby.github.io</a></span>
+        <span>@ 吾律心尘 · <a href="https://wulvxinchen.cn/" target="_blank" rel="noopener">wulvxinchen.cn</a></span>
     </footer>
 
     <noscript>
@@ -469,9 +456,8 @@
         ];
 
         // ---------- DOM ----------
-        var chips = document.getElementById('chips');
+        var entryBtn = document.getElementById('entry');
         var browse = document.getElementById('browse');
-        var collapseBtn = document.getElementById('collapse');
 
         // ---------- 主题 ----------
         var root = document.documentElement;
@@ -515,9 +501,8 @@
                 '<span class="d">' + item.desc + '</span></span></a>';
         }
 
-        function renderBrowse(cat) {
-            var groups = cat === 'all' ? GROUPS : GROUPS.filter(function (g) { return g.cat === cat; });
-            var html = groups.map(function (g) {
+        function renderAll() {
+            var html = GROUPS.map(function (g) {
                 var items = DATA.filter(function (it) { return it.cat === g.cat; });
                 return '<section class="group">' +
                     '<div class="group-head"><span class="dot" aria-hidden="true"></span>' +
@@ -527,43 +512,34 @@
             }).join('');
             browse.innerHTML = html;
             browse.hidden = false;
-            collapseBtn.hidden = false;
-            setActive(cat);
             browse.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        function setActive(cat) {
-            var btns = chips.querySelectorAll('.chip');
-            for (var i = 0; i < btns.length; i++) {
-                btns[i].classList.toggle('active', btns[i].dataset.cat === cat);
-            }
         }
 
         function collapse() {
             browse.hidden = true;
-            collapseBtn.hidden = true;
-            setActive(null);
         }
 
-        // ---------- 交互 ----------
-        chips.addEventListener('click', function (e) {
-            var chip = e.target.closest('.chip');
-            if (!chip) return;
-            if (chip.id === 'collapse') {
+        // ---------- 落语：点击展开/收起全部网站 ----------
+        entryBtn.addEventListener('click', function () {
+            var isOpen = !browse.hidden;
+            if (isOpen) {
+                // 已展开 → 收起
                 collapse();
-                return;
+                entryBtn.classList.remove('active');
+                entryBtn.setAttribute('aria-expanded', 'false');
+            } else {
+                // 收起状态 → 展开全部
+                renderAll();
+                entryBtn.classList.add('active');
+                entryBtn.setAttribute('aria-expanded', 'true');
             }
-            // 再次点击当前分类则收起
-            if (chip.classList.contains('active')) {
-                collapse();
-                return;
-            }
-            renderBrowse(chip.dataset.cat);
         });
 
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && !browse.hidden) {
                 collapse();
+                entryBtn.classList.remove('active');
+                entryBtn.setAttribute('aria-expanded', 'false');
             }
         });
     </script>
