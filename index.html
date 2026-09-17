@@ -141,36 +141,21 @@
             text-align: center;
         }
 
-        .brand-mark {
-            width: 58px;
-            height: 58px;
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 25px;
-            font-weight: 600;
-            color: #fff;
-            background: linear-gradient(135deg, var(--accent-deep), var(--accent-2));
-            box-shadow: 0 12px 28px -10px rgba(70, 73, 110, .5);
-            animation: rise .5s ease both;
-        }
-
         .title {
-            margin: 20px 0 0;
+            margin: 0;
             font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;
             font-size: clamp(30px, 5.5vw, 42px);
             font-weight: 600;
             letter-spacing: .14em;
-            animation: rise .5s .08s ease both;
+            animation: rise .5s ease both;
         }
 
         .greet {
-            margin: 12px 0 0;
+            margin: 14px 0 0;
             font-size: 13px;
             color: var(--ink-2);
             letter-spacing: .05em;
-            animation: rise .5s .16s ease both;
+            animation: rise .5s .08s ease both;
         }
 
         /* ---------- 落语按钮 ---------- */
@@ -188,7 +173,7 @@
             text-indent: .3em;
             cursor: pointer;
             transition: background-color .25s, color .25s, border-color .25s, box-shadow .25s;
-            animation: rise .5s .24s ease both;
+            animation: rise .5s .16s ease both;
         }
 
         .entry:hover {
@@ -321,6 +306,62 @@
             }
         }
 
+        /* ---------- 回收分类（不显眼，默认折叠） ---------- */
+        .recycle {
+            margin-top: 40px;
+            border-top: 1px dashed var(--line);
+        }
+
+        .recycle-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 26px 4px 0;
+            border: none;
+            background: none;
+            font: inherit;
+            color: var(--ink-2);
+            opacity: .75;
+            cursor: pointer;
+            text-align: left;
+            transition: opacity .2s, color .2s;
+        }
+
+        .recycle-head:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
+
+        .recycle-head h2 {
+            margin: 0;
+            font-size: 13px;
+            letter-spacing: .18em;
+        }
+
+        .recycle-head .count {
+            font-size: 11px;
+            color: var(--ink-2);
+            background: var(--accent-soft);
+            border: 1px solid var(--line);
+            padding: 2px 10px;
+            border-radius: 999px;
+        }
+
+        .recycle-head .arrow {
+            margin-left: auto;
+            font-size: 11px;
+            transition: transform .2s;
+        }
+
+        .recycle-head.open .arrow {
+            transform: rotate(90deg);
+        }
+
+        .recycle .grid {
+            margin-top: 14px;
+        }
+
         /* ---------- 页脚 ---------- */
         footer {
             position: fixed;
@@ -366,7 +407,6 @@
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="切换深浅色模式">🌙</button>
 
     <main class="stage">
-        <div class="brand-mark" aria-hidden="true">心</div>
         <h1 class="title">心尘的引导</h1>
         <p class="greet" id="greet">你好，欢迎回来</p>
 
@@ -418,16 +458,14 @@
             { cat: 'sub', title: '子站列表' },
             { cat: 'tools', title: '杂七杂八 · 工具类' },
             { cat: 'misc', title: '杂七杂八 · 杂项类' },
-            { cat: 'social', title: '个人链接' }
+            { cat: 'social', title: '个人链接' },
+            { cat: 'recycle', title: '回收' }
         ];
 
         var DATA = [
             { cat: 'quick', icon: '✨', title: '全新心尘工具集', desc: '新版工具合集', url: 'https://my.wulvxinchen.cn/tools2' },
-            { cat: 'quick', icon: '🧰', title: '心尘工具集', desc: '工具合集', url: 'https://my.wulvxinchen.cn/tools' },
 
-            { cat: 'sub', icon: '📝', title: '博客站', desc: '个人博客', url: 'https://blog.wulvxinchen.cn/' },
             { cat: 'sub', icon: '🖼️', title: '图片站', desc: '图片资源站', url: 'https://my.wulvxinchen.cn/pictures' },
-            { cat: 'sub', icon: '🎨', title: '新图片站', desc: '新版图片站', url: 'http://dl.wulvxinchen.cn:5244/open/图片/' },
             { cat: 'sub', icon: '📦', title: '下载站', desc: '文件下载站', url: 'http://dl.wulvxinchen.cn:5244/' },
 
             { cat: 'tools', icon: '🔍', title: '快速搜索文本', desc: '批量搜索文本', url: 'https://my.wulvxinchen.cn/quicksearchtext/' },
@@ -442,7 +480,6 @@
 
             { cat: 'misc', icon: '🍑', title: '胡桃Live2D', desc: '胡桃 Live2D', url: 'https://my.wulvxinchen.cn/hutaolive' },
             { cat: 'misc', icon: '☀️', title: '晴天委托', desc: '晴天委托助手', url: 'https://my.wulvxinchen.cn/sunny/' },
-            { cat: 'misc', icon: '⚡', title: '即刻搜索', desc: '即时搜索', url: 'https://my.wulvxinchen.cn/search/' },
             { cat: 'misc', icon: '📊', title: 'GitHub贡献表', desc: '贡献热力图', url: 'https://my.wulvxinchen.cn/githubtable.html' },
             { cat: 'misc', icon: '😤', title: '祖安骂人', desc: '祖安语录生成', url: 'https://my.wulvxinchen.cn/fxxkyou/' },
             { cat: 'misc', icon: '📌', title: 'PSL', desc: 'PSL', url: 'https://my.wulvxinchen.cn/PSL/' },
@@ -452,7 +489,12 @@
             { cat: 'social', icon: '🎬', title: 'Bangumi', desc: '番剧记录', url: 'https://bangumi.tv/user/767656' },
             { cat: 'social', icon: '🎥', title: 'AcFun', desc: 'AcFun 主页', url: 'https://www.acfun.cn/u/3240613' },
             { cat: 'social', icon: '🎵', title: '网易云音乐', desc: '音乐主页', url: 'https://music.163.com/#/user/home?id=269077414' },
-            { cat: 'social', icon: '▶️', title: 'YouTube', desc: '视频频道', url: 'https://www.youtube.com/@wulvxinchen' }
+            { cat: 'social', icon: '▶️', title: 'YouTube', desc: '视频频道', url: 'https://www.youtube.com/@wulvxinchen' },
+
+            { cat: 'recycle', icon: '🧰', title: '心尘工具集', desc: '工具合集', url: 'https://my.wulvxinchen.cn/tools' },
+            { cat: 'recycle', icon: '🎨', title: '新图片站', desc: '新版图片站', url: 'http://dl.wulvxinchen.cn:5244/open/图片/' },
+            { cat: 'recycle', icon: '⚡', title: '即刻搜索', desc: '即时搜索', url: 'https://my.wulvxinchen.cn/search/' },
+            { cat: 'recycle', icon: '📝', title: '博客站', desc: '个人博客', url: 'https://blog.wulvxinchen.cn/' }
         ];
 
         // ---------- DOM ----------
@@ -504,6 +546,16 @@
         function renderAll() {
             var html = GROUPS.map(function (g) {
                 var items = DATA.filter(function (it) { return it.cat === g.cat; });
+                if (g.cat === 'recycle') {
+                    // 回收：只显示分类名，默认折叠，点击后才展开
+                    return '<section class="group recycle">' +
+                        '<button type="button" class="recycle-head" aria-expanded="false">' +
+                        '<span class="dot" aria-hidden="true"></span>' +
+                        '<h2>' + g.title + '</h2>' +
+                        '<span class="count">' + items.length + '</span>' +
+                        '<span class="arrow" aria-hidden="true">▸</span></button>' +
+                        '<div class="grid" hidden>' + items.map(cardHTML).join('') + '</div></section>';
+                }
                 return '<section class="group">' +
                     '<div class="group-head"><span class="dot" aria-hidden="true"></span>' +
                     '<h2>' + g.title + '</h2>' +
@@ -528,11 +580,22 @@
                 entryBtn.classList.remove('active');
                 entryBtn.setAttribute('aria-expanded', 'false');
             } else {
-                // 收起状态 → 展开全部
+                // 收起状态 → 展开全部（回收分类仍保持折叠）
                 renderAll();
                 entryBtn.classList.add('active');
                 entryBtn.setAttribute('aria-expanded', 'true');
             }
+        });
+
+        // 回收分类：点击表头单独展开/收起
+        browse.addEventListener('click', function (e) {
+            var head = e.target.closest('.recycle-head');
+            if (!head) return;
+            var grid = head.parentElement.querySelector('.grid');
+            var willOpen = grid.hidden;
+            grid.hidden = !willOpen;
+            head.classList.toggle('open', willOpen);
+            head.setAttribute('aria-expanded', String(willOpen));
         });
 
         document.addEventListener('keydown', function (e) {
